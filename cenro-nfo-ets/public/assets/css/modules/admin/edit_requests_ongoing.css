@@ -1,0 +1,289 @@
+﻿/* Style inputs with light background; admin can edit fields here */
+input,
+textarea,
+select {
+  background-color: #f8f9fa !important;
+}
+
+/* Increase main content readability: enlarge base font and override tiny inline sizes */
+.main .main-content {
+  font-size: 14px;
+}
+
+.main .main-content table,
+.main .main-content td,
+.main .main-content th,
+.main .main-content input,
+.main .main-content select,
+.main .main-content textarea,
+.main .main-content .signature-box {
+  font-size: 14px !important;
+}
+
+.main .main-content .container-fluid {
+  max-width: 1100px;
+}
+
+/* Shift Back button left so it does not align with centered main content */
+.back-left {
+  position: relative;
+  left: -150px;
+}
+
+/* On narrow screens, keep Back button inside viewport */
+@media (max-width: 768px) {
+  .back-left {
+    left: 0;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .admin-edit-requests-ongoing-page .sidebar {
+    width: min(220px, calc(100vw - 32px));
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-logo {
+    gap: 10px;
+    padding: 18px 18px 8px;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-logo span {
+    font-size: 1.4rem;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-role {
+    padding: 18px 0;
+    font-size: .98rem;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-nav li,
+  .admin-edit-requests-ongoing-page .sidebar-nav li:not(.dropdown),
+  .admin-edit-requests-ongoing-page .sidebar-nav li.dropdown > a.dropdown-toggle {
+    padding: 10px 22px;
+    font-size: 1rem;
+    gap: 10px;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-nav li i {
+    width: 20px;
+    font-size: 1rem;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-nav li.dropdown .dropdown-menu li {
+    padding: 8px 22px 8px 45px;
+    font-size: 0.85rem;
+  }
+
+  .admin-edit-requests-ongoing-page .sidebar-nav li.dropdown .dropdown-menu li::before {
+    left: 33px;
+  }
+
+  .admin-edit-requests-ongoing-page .mobile-nav-toggle {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+
+  .admin-edit-requests-ongoing-page .mobile-nav-toggle i {
+    font-size: 1.18rem;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-card {
+    padding: 16px 18px;
+    min-height: 78px;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-title {
+    font-size: 1.32rem;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-profile-img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-edit-requests-ongoing-page .topbar-card {
+    padding: 14px 16px;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-profile-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-profile-info {
+    display: flex !important;
+    gap: 2px;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-profile-info .name {
+    font-size: 0.9rem !important;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-profile-info .role {
+    font-size: 0.8rem !important;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-title {
+    font-size: 1.28rem;
+  }
+}
+
+@media screen {
+  .admin-edit-requests-ongoing-page,
+  .property-custodian-edit-requests-ongoing-page,
+  .admin-edit-requests-ongoing-page .layout,
+  .property-custodian-edit-requests-ongoing-page .layout,
+  .admin-edit-requests-ongoing-page .main,
+  .property-custodian-edit-requests-ongoing-page .main,
+  .admin-edit-requests-ongoing-page .main-content,
+  .property-custodian-edit-requests-ongoing-page .main-content,
+  .admin-edit-requests-ongoing-page .container-fluid,
+  .property-custodian-edit-requests-ongoing-page .container-fluid {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .admin-edit-requests-ongoing-page .container-fluid,
+  .property-custodian-edit-requests-ongoing-page .container-fluid {
+    width: 100%;
+    max-width: none;
+  }
+
+  .admin-edit-requests-ongoing-page #editForm,
+  .property-custodian-edit-requests-ongoing-page #editForm {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.4rem;
+  }
+
+  .admin-edit-requests-ongoing-page #editForm > div,
+  .property-custodian-edit-requests-ongoing-page #editForm > div {
+    box-sizing: border-box;
+    max-width: none !important;
+  }
+
+  .admin-edit-requests-ongoing-page .row.mb-3 .d-flex,
+  .property-custodian-edit-requests-ongoing-page .row.mb-3 .d-flex {
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 0.5rem;
+  }
+
+  .admin-edit-requests-ongoing-page .row.mb-3 .btn,
+  .property-custodian-edit-requests-ongoing-page .row.mb-3 .btn,
+  .admin-edit-requests-ongoing-page .back-left,
+  .property-custodian-edit-requests-ongoing-page .back-left {
+    left: 0;
+    width: auto !important;
+    min-width: 0;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+  }
+
+  .admin-edit-requests-ongoing-page .mobile-nav-toggle,
+  .property-custodian-edit-requests-ongoing-page .mobile-nav-toggle {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 10px;
+  }
+
+  .admin-edit-requests-ongoing-page .mobile-nav-toggle i,
+  .property-custodian-edit-requests-ongoing-page .mobile-nav-toggle i {
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
+  .admin-edit-requests-ongoing-page .main-content,
+  .property-custodian-edit-requests-ongoing-page .main-content {
+    padding: 0;
+  }
+
+  .admin-edit-requests-ongoing-page .container-fluid,
+  .property-custodian-edit-requests-ongoing-page .container-fluid {
+    padding: 0.75rem !important;
+  }
+
+  .admin-edit-requests-ongoing-page #editForm > div,
+  .property-custodian-edit-requests-ongoing-page #editForm > div {
+    min-width: 860px;
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+  .admin-edit-requests-ongoing-page .topbar-card,
+  .property-custodian-edit-requests-ongoing-page .topbar-card {
+    min-height: 58px;
+    padding: 10px 12px;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-title,
+  .property-custodian-edit-requests-ongoing-page .topbar-title {
+    font-size: 1.05rem;
+  }
+
+  .admin-edit-requests-ongoing-page .topbar-profile-img,
+  .property-custodian-edit-requests-ongoing-page .topbar-profile-img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .admin-edit-requests-ongoing-page .container-fluid,
+  .property-custodian-edit-requests-ongoing-page .container-fluid {
+    padding: 0.5rem !important;
+  }
+
+  .admin-edit-requests-ongoing-page .row.mb-3 .d-flex,
+  .property-custodian-edit-requests-ongoing-page .row.mb-3 .d-flex {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center !important;
+  }
+
+  .admin-edit-requests-ongoing-page #editForm > div,
+  .property-custodian-edit-requests-ongoing-page #editForm > div {
+    min-width: 760px;
+  }
+
+  .admin-edit-requests-ongoing-page #editForm + div,
+  .property-custodian-edit-requests-ongoing-page #editForm + div {
+    justify-content: flex-start !important;
+    padding-right: 0 !important;
+  }
+
+  .admin-edit-requests-ongoing-page #editForm + div .btn,
+  .property-custodian-edit-requests-ongoing-page #editForm + div .btn {
+    width: auto !important;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.82rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .admin-edit-requests-ongoing-page #editForm > div,
+  .property-custodian-edit-requests-ongoing-page #editForm > div {
+    min-width: 700px;
+  }
+
+  .admin-edit-requests-ongoing-page .mobile-nav-toggle,
+  .property-custodian-edit-requests-ongoing-page .mobile-nav-toggle {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+  }
+}

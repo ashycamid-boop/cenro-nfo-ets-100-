@@ -1,0 +1,435 @@
+/* ===== SPOT REPORTS STYLES - Exact Design Match ===== */
+
+/* Use shared topbar styles from admin/common.css */
+
+/* Main Content */
+.main-content {
+  background: #ECEFF1;
+  min-height: 100vh;
+}
+
+/* Filter Section */
+.filter-section {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.mobile-filter-toggle {
+  border-radius: 10px;
+}
+
+.mobile-filter-panel {
+  margin-top: 0;
+}
+
+.filter-section .form-control,
+.filter-section .form-select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  height: 38px;
+}
+
+.filter-section .form-control:focus,
+.filter-section .form-select:focus {
+  border-color: #0038A8;
+  box-shadow: 0 0 0 2px rgba(0, 56, 168, 0.15);
+  outline: none;
+}
+
+.btn-primary {
+  background: #0038A8;
+  border-color: #0038A8;
+  font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+  background: #002d80;
+  border-color: #002d80;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.btn-outline-secondary:hover {
+  background: #6c757d;
+  border-color: #6c757d;
+}
+
+/* Summary Cards */
+.summary-card {
+  background: #F7F9FB;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 0;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 3px;
+  font-weight: 400;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Table Styles */
+.table {
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+
+.table th {
+  border-bottom: 1px solid #ddd;
+  border-top: none;
+  font-weight: 600;
+  color: #444;
+  padding: 12px 8px;
+  background: #f8f9fa !important;
+  font-size: 0.8rem;
+}
+
+.table td {
+  padding: 12px 8px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+  border-top: none;
+}
+
+/* Removed hover effect as requested */
+
+/* Status Badges */
+.badge {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.badge.bg-success {
+  background-color: #28a745 !important;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+/* Table Text Styling */
+.text-muted {
+  color: #6c757d !important;
+}
+
+.small {
+  font-size: 0.8rem !important;
+}
+
+/* Card Styling */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-top: 15px;
+}
+
+/* Button Styling */
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.btn-outline-primary {
+  color: #0038A8;
+  border-color: #0038A8;
+}
+
+.btn-outline-primary:hover {
+  background: #0038A8;
+  border-color: #0038A8;
+  color: white;
+}
+
+.status-comment-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+  vertical-align: middle;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background: #fff;
+  color: #495057;
+  padding: 0;
+}
+
+/* Container Padding */
+.container-fluid {
+  padding: 25px !important;
+}
+
+/* Filter Section Spacing */
+.filter-section.mb-4 {
+  margin-bottom: 20px !important;
+}
+
+/* Summary Cards Spacing */
+.row.mb-3 {
+  margin-bottom: 15px !important;
+}
+
+/* Table Container */
+.table-responsive {
+  border-radius: 0;
+}
+
+.sr-mobile-toolbar,
+.sr-active-filters {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-spot-reports-page .container-fluid.p-4 {
+    padding: 0.75rem !important;
+  }
+
+  .admin-spot-reports-page .filter-section {
+    padding: 12px;
+  }
+
+  .admin-spot-reports-page .filter-section .row {
+    row-gap: 0.75rem;
+  }
+
+  .admin-spot-reports-page .filter-section .form-control,
+  .admin-spot-reports-page .filter-section .form-select,
+  .admin-spot-reports-page .filter-section .btn {
+    height: 36px;
+    font-size: 0.82rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .filter-section .row {
+    gap: 10px;
+  }
+  
+  .summary-card {
+    margin-bottom: 15px;
+  }
+  
+  .table th, .table td {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+  
+  .container-fluid {
+    padding: 15px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-spot-reports-page .sr-filters-desktop {
+    display: none;
+  }
+
+  .admin-spot-reports-page .sr-mobile-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-spot-reports-page .sr-mobile-search-wrap {
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  .admin-spot-reports-page .sr-mobile-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  .admin-spot-reports-page .sr-mobile-search {
+    padding-left: 2.35rem;
+    min-height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .admin-spot-reports-page .sr-mobile-filter-btn {
+    min-height: 38px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #d7e0ea;
+    border-radius: 12px;
+    background: #fff;
+    color: #1f2937;
+    font-size: 0.78rem;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    white-space: nowrap;
+  }
+
+  .admin-spot-reports-page .sr-active-filters {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-spot-reports-page .sr-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0.42rem 0.68rem;
+    border-radius: 999px;
+    background: #edf4ff;
+    color: #174ea6;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .admin-spot-reports-page .container-fluid.p-4 {
+    padding: 0.4rem !important;
+  }
+
+  .admin-spot-reports-page .topbar-title {
+    font-size: 1.1rem;
+  }
+
+  .admin-spot-reports-page .summary-card {
+    padding: 10px 12px;
+    margin-bottom: 0;
+  }
+
+  .admin-spot-reports-page .summary-label {
+    font-size: 0.75rem;
+  }
+
+  .admin-spot-reports-page .summary-value {
+    font-size: 1rem;
+  }
+
+  .admin-spot-reports-page .table-responsive {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-spot-reports-page .table {
+    min-width: 1100px;
+    width: max-content;
+  }
+
+  .admin-spot-reports-page .table thead {
+    display: table-header-group !important;
+  }
+
+  .admin-spot-reports-page .table td {
+    padding: 0.58rem 0.7rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .admin-spot-reports-page .table th {
+    padding: 0.62rem 0.7rem;
+    font-size: 0.79rem;
+    white-space: nowrap;
+  }
+
+  .admin-spot-reports-page .status-comment-btn {
+    margin-left: 6px;
+  }
+
+  .admin-spot-reports-page .sr-filters-modal-dialog {
+    align-items: flex-end;
+    margin: 0;
+    min-height: 100%;
+  }
+
+  .admin-spot-reports-page .sr-filters-modal-content {
+    border: 0;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.14);
+  }
+
+  .admin-spot-reports-page .sr-filters-modal-content .modal-header {
+    padding: 1rem 1rem 0.85rem;
+  }
+
+  .admin-spot-reports-page .sr-filters-modal-content .modal-body {
+    padding: 0.4rem 1rem 1rem;
+  }
+
+  .admin-spot-reports-page .sr-modal-field {
+    margin-bottom: 0.9rem;
+  }
+
+  .admin-spot-reports-page .sr-modal-field .form-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.4rem;
+  }
+
+  .admin-spot-reports-page .sr-filters-modal-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+    padding: 0.9rem 1rem 1rem;
+  }
+
+  .admin-spot-reports-page .sr-filters-modal-footer > * {
+    margin: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .admin-spot-reports-page .table,
+  .admin-spot-reports-page .table tbody,
+  .admin-spot-reports-page .table td,
+  .admin-spot-reports-page .table th {
+    display: revert !important;
+    width: auto !important;
+  }
+
+  .admin-spot-reports-page .table tr {
+    width: auto !important;
+  }
+
+  .admin-spot-reports-page .table tbody tr[style*="display: none"] {
+    display: none !important;
+  }
+
+  .admin-spot-reports-page .table tbody tr:not([style*="display: none"]) {
+    display: table-row !important;
+  }
+
+  .admin-spot-reports-page .table td::before {
+    content: none !important;
+    display: none !important;
+  }
+}

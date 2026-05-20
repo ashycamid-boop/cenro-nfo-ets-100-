@@ -1,0 +1,294 @@
+﻿.badge.bg-primary {
+      background-color: #0d6efd !important;
+      color: white !important;
+    }
+    .badge.bg-success {
+      background-color: #198754 !important;
+      color: white !important;
+    }
+    /* Summary card sizing tweaks */
+    .summary-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.75rem;
+      min-width: 110px;
+      box-sizing: border-box;
+    }
+    .summary-label {
+      font-size: 0.78rem;
+      color: #555;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .summary-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    /* Compact pill layout */
+    .summary-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+    }
+    .summary-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding: 0.6rem 0.85rem;
+      border-radius: 999px;
+      min-width: 120px;
+      box-sizing: border-box;
+    }
+    .pill-label { font-size: 0.85rem; color: #555; white-space: nowrap; }
+.pill-count { font-weight: 800; font-size: 1.15rem; color: #222; }
+
+.sr-mobile-toolbar,
+.sr-active-filters {
+  display: none;
+}
+
+.mobile-filter-toggle {
+  border-radius: 10px;
+}
+
+.mobile-filter-panel {
+  margin-top: 0;
+}
+
+.actions-cell {
+  white-space: nowrap;
+}
+
+.actions-cell .btn {
+  min-width: 72px;
+}
+
+@media (max-width: 768px) {
+  .admin-case-management-page .container-fluid.p-4 {
+    padding: 0.75rem !important;
+  }
+
+  .admin-case-management-page .filter-section {
+    padding: 12px;
+    margin-bottom: 12px !important;
+  }
+
+  .admin-case-management-page .filter-section .row {
+    row-gap: 0.75rem;
+  }
+
+  .admin-case-management-page .filter-section .form-control,
+  .admin-case-management-page .filter-section .form-select,
+  .admin-case-management-page .filter-section .btn {
+    height: 36px;
+    font-size: 0.82rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .admin-case-management-page .summary-pills {
+    gap: 0.5rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.2rem;
+    scrollbar-width: thin;
+  }
+
+  .admin-case-management-page .summary-pill {
+    min-width: 112px;
+    padding: 0.5rem 0.75rem;
+    flex: 0 0 auto;
+  }
+
+  .admin-case-management-page .pill-label {
+    font-size: 0.76rem;
+  }
+
+  .admin-case-management-page .pill-count {
+    font-size: 1rem;
+  }
+
+  .admin-case-management-page .card {
+    border-radius: 14px;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-case-management-page .sr-filters-desktop {
+    display: none;
+  }
+
+  .admin-case-management-page .sr-mobile-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-case-management-page .sr-mobile-search-wrap {
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  .admin-case-management-page .sr-mobile-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  .admin-case-management-page .sr-mobile-search {
+    padding-left: 2.35rem;
+    min-height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .admin-case-management-page .sr-mobile-filter-btn {
+    min-height: 38px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #d7e0ea;
+    border-radius: 12px;
+    background: #fff;
+    color: #1f2937;
+    font-size: 0.78rem;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    white-space: nowrap;
+  }
+
+  .admin-case-management-page .sr-active-filters {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-case-management-page .sr-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0.42rem 0.68rem;
+    border-radius: 999px;
+    background: #edf4ff;
+    color: #174ea6;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .admin-case-management-page .container-fluid.p-4 {
+    padding: 0.4rem !important;
+  }
+
+  .admin-case-management-page .topbar-title {
+    font-size: 1.1rem;
+  }
+
+  .admin-case-management-page .table-responsive {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-case-management-page .table {
+    min-width: 1160px;
+    width: max-content;
+  }
+
+  .admin-case-management-page .table thead {
+    display: table-header-group !important;
+  }
+
+  .admin-case-management-page .table td {
+    padding: 0.58rem 0.7rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .admin-case-management-page .table th {
+    padding: 0.62rem 0.7rem;
+    font-size: 0.79rem;
+    white-space: nowrap;
+  }
+
+  .admin-case-management-page .sr-filters-modal-dialog {
+    align-items: flex-end;
+    margin: 0;
+    min-height: 100%;
+  }
+
+  .admin-case-management-page .sr-filters-modal-content {
+    border: 0;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.14);
+  }
+
+  .admin-case-management-page .sr-filters-modal-content .modal-header {
+    padding: 1rem 1rem 0.85rem;
+  }
+
+  .admin-case-management-page .sr-filters-modal-content .modal-body {
+    padding: 0.4rem 1rem 1rem;
+  }
+
+  .admin-case-management-page .sr-modal-field {
+    margin-bottom: 0.9rem;
+  }
+
+  .admin-case-management-page .sr-modal-field .form-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.4rem;
+  }
+
+  .admin-case-management-page .sr-filters-modal-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+    padding: 0.9rem 1rem 1rem;
+  }
+
+  .admin-case-management-page .sr-filters-modal-footer > * {
+    margin: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .admin-case-management-page .table,
+  .admin-case-management-page .table tbody,
+  .admin-case-management-page .table td,
+  .admin-case-management-page .table th {
+    display: revert !important;
+    width: auto !important;
+  }
+
+  .admin-case-management-page .table tr {
+    width: auto !important;
+  }
+
+  .admin-case-management-page .table tbody tr[style*="display: none"] {
+    display: none !important;
+  }
+
+  .admin-case-management-page .table tbody tr:not([style*="display: none"]) {
+    display: table-row !important;
+  }
+
+  .admin-case-management-page .table td::before {
+    content: none !important;
+    display: none !important;
+  }
+}

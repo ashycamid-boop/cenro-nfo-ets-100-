@@ -1,0 +1,149 @@
+/* Allow input for new requests form */
+.readonly-section input,
+.readonly-section textarea,
+.readonly-section select {
+  background-color: #f8f9fa !important;
+  pointer-events: none !important;
+}
+
+.readonly-section input[type="file"] {
+  opacity: 0.5 !important;
+  pointer-events: none !important;
+}
+
+.service-request-form-page .container-fluid {
+  width: 100%;
+  max-width: none;
+}
+
+.service-request-form-page .main-content {
+  padding: 20px;
+}
+
+.service-request-form-page .topbar {
+  margin-top: 0 !important;
+}
+
+.service-request-form-page .topbar-card {
+  align-items: center;
+}
+
+.service-request-form-page .topbar-title {
+  font-family: 'Fredoka One', cursive;
+  color: #0038A8;
+}
+
+.service-request-form-page .service-request-sheet-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 18px;
+}
+
+.service-request-form-page .service-request-sheet {
+  width: 100%;
+  overflow-x: visible;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.service-request-form-page .eo-new-request-back-btn,
+.service-request-form-page #saveDraftBtn,
+.service-request-form-page #submitBtn {
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 991.98px) {
+  .service-request-form-page .main-content {
+    padding: 0;
+  }
+
+  .service-request-form-page .container-fluid {
+    padding: 0.75rem !important;
+  }
+
+  .service-request-form-page .service-request-sheet {
+    min-width: 920px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .service-request-form-page .container-fluid {
+    padding: 0.55rem !important;
+  }
+
+  .service-request-form-page .topbar-title {
+    font-size: 1rem;
+  }
+
+  .service-request-form-page .eo-new-request-content {
+    padding-top: 0.4rem !important;
+  }
+
+  .service-request-form-page .eo-new-request-back-row {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .service-request-form-page .eo-new-request-back-btn {
+    min-width: 92px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.88rem;
+  }
+
+  .service-request-form-page .service-request-sheet-wrap {
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    background: #ffffff;
+  }
+
+  .service-request-form-page .service-request-sheet {
+    min-width: 840px;
+    border-radius: 14px;
+  }
+
+  .service-request-form-page .eo-new-request-actions {
+    flex-direction: row;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem !important;
+  }
+
+  .service-request-form-page .eo-new-request-actions .btn {
+    width: auto;
+    margin-right: 0 !important;
+    min-height: 40px;
+    min-width: 122px;
+    padding: 0.52rem 0.9rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .service-request-form-page .container-fluid {
+    padding: 0.45rem !important;
+  }
+
+  .service-request-form-page .topbar-title {
+    font-size: 0.95rem;
+  }
+
+  .service-request-form-page .service-request-sheet {
+    min-width: 800px;
+  }
+
+  .service-request-form-page .eo-new-request-actions .btn {
+    min-width: 112px;
+    padding: 0.48rem 0.8rem;
+    font-size: 0.86rem;
+  }
+
+  .service-request-form-page .eo-new-request-back-btn {
+    min-width: 86px;
+    padding: 0.42rem 0.7rem;
+    font-size: 0.84rem;
+  }
+}

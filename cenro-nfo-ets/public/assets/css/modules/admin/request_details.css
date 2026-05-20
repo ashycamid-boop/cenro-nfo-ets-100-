@@ -1,0 +1,402 @@
+/* Style inputs with light background; admin can edit fields here */
+input, textarea, select {
+  background-color: #f8f9fa !important;
+}
+
+/* Increase main content readability: enlarge base font and override tiny inline sizes */
+.main .main-content { 
+  font-size: 14px; 
+}
+
+.main .main-content table,
+.main .main-content td,
+.main .main-content th,
+.main .main-content input,
+.main .main-content select,
+.main .main-content textarea,
+.main .main-content .signature-box {
+  font-size: 14px !important;
+}
+
+.main .main-content .container-fluid { 
+  max-width: 1100px; 
+}
+
+/* Prevent horizontal scroll and keep main containers free to expand */
+html, body { 
+  overflow-x: hidden; 
+}
+
+.layout, .main, .main-content, .container-fluid, #viewForm, #viewForm > div { 
+  overflow: visible !important; 
+  max-height: none !important; 
+  height: auto !important; 
+}
+
+/* Shift Back button left so it doesn't align with centered main content */
+.back-left { 
+  position: relative; 
+  left: -150px; 
+}
+
+@media (max-width: 768px) { 
+  .back-left { 
+    left: 0; 
+  } 
+}
+
+@media (max-width: 575.98px) {
+  .main .main-content .container-fluid {
+    max-width: none;
+    padding: 0.5rem !important;
+  }
+
+  .row.mb-3 .d-flex {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.5rem;
+  }
+
+  .row.mb-3 .btn {
+    width: 100%;
+  }
+}
+
+/* Remove default border for ack signature box (screen and print) */
+#ack_sig_box { 
+  border: none !important; 
+  box-shadow: none !important; 
+  background: transparent !important; 
+}
+
+.service-request-form-page .container-fluid {
+  width: 100%;
+  max-width: none;
+}
+
+.service-request-form-page .main-content {
+  padding: 20px;
+}
+
+.service-request-form-page .service-request-sheet {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.service-request-form-page #viewForm {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.service-request-form-page .row.mb-3 .d-flex {
+  gap: 0.75rem;
+}
+
+@media (max-width: 991.98px) {
+  .service-request-form-page .main-content {
+    padding: 0;
+  }
+
+  .service-request-form-page .container-fluid {
+    padding: 0.75rem !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .service-request-form-page .container-fluid {
+    padding: 0.4rem !important;
+  }
+
+  .service-request-form-page .topbar-title {
+    font-size: 1.05rem;
+  }
+
+  .service-request-form-page .row.mb-3 .d-flex {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+
+  .service-request-form-page .row.mb-3 .btn {
+    width: 100%;
+  }
+
+  .service-request-form-page .service-request-sheet {
+    min-width: 760px;
+    width: 760px;
+    max-width: none !important;
+    border-radius: 14px;
+  }
+}
+
+/* Print styles: use LONG BOND (8.5in x 13in) portrait */
+@page { 
+  size: 8.5in 13in portrait; 
+  margin: 4mm; 
+}
+
+@media print {
+  html, body { 
+    background: #fff !important;
+    background-color: #fff !important;
+    color-adjust: exact; 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide navigation, controls and non-essential UI */
+  .sidebar, .topbar, .sidebar-nav, .btn, .dropdown, .modal, .no-print, .navigation, .topbar-card { 
+    display: none !important; 
+  }
+
+  /* Expand main content to full width for printing */
+  .layout, .main, .main-content, .container-fluid { 
+    width: 100% !important; 
+    max-width: none !important; 
+    padding: 0 !important; 
+    margin: 0 !important; 
+  }
+
+  /* Remove gray backgrounds in print */
+  .layout, .main, .main-content, .container-fluid,
+  #viewForm, #viewForm > div,
+  .card, .card-body, .shadow, .shadow-sm, .shadow-lg,
+  .bg-light, .bg-body, .bg-secondary, .table-responsive {
+    background: #fff !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    background-image: none !important;
+  }
+
+  /* Ensure tables and borders print correctly */
+  table { 
+    border-collapse: collapse !important;
+    page-break-inside: auto !important; 
+    break-inside: auto !important; 
+  }
+
+  tr, td, th { 
+    -webkit-print-color-adjust: exact; 
+    color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+
+  /* Avoid clipping of images/signatures */
+  img { 
+    max-width: 100% !important; 
+    height: auto !important; 
+    -webkit-transform: none !important; 
+    transform: none !important; 
+  }
+
+  .signature-box { 
+    cursor: default !important; 
+  }
+
+  #ack_sig_box { 
+    border: none !important; 
+    box-shadow: none !important; 
+    background: transparent !important; 
+  }
+
+  .acknowledgement-signature-section {
+    padding: 1px 8px 0 !important;
+  }
+
+  .acknowledgement-signature-section > div {
+    min-height: 0 !important;
+  }
+
+  .acknowledgement-signature-section #ack_sig_box {
+    width: 145px !important;
+    height: 34px !important;
+    min-height: 0 !important;
+  }
+
+  .acknowledgement-signature-section #ack_sig_preview {
+    max-height: 32px !important;
+    width: auto !important;
+  }
+
+  .acknowledgement-footer-section {
+    padding: 4px 12px 5px !important;
+  }
+
+  .acknowledgement-footer-section table {
+    margin-bottom: 2px !important;
+  }
+
+  .acknowledgement-footer-section td {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+  }
+
+  .acknowledgement-footer-section td > div:first-child {
+    height: 14px !important;
+    margin-bottom: 1px !important;
+  }
+
+  /* Inputs/select/textarea should be white in print */
+  input, textarea, select { 
+    background: #fff !important; 
+    background-color: #fff !important; 
+    box-shadow: none !important; 
+    border-color: #000 !important; 
+    appearance: none !important; 
+    -webkit-appearance: none !important; 
+  }
+
+  /* Keep text alignment normal */
+  #viewForm {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  /* Center only the paper itself */
+  #viewForm > div {
+    width: 7.95in !important;
+    max-width: 7.95in !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+    transform-origin: top center !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    zoom: 0.97 !important;
+  }
+
+  /* Prevent unexpected scaling/rotation from browser print preview */
+  html, body, #viewForm {
+    height: auto !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+
+  /* Prevent scrollbars on printed page by forcing visible overflow and auto heights */
+  html, body, .layout, .main, .main-content, .container-fluid, #viewForm, #viewForm > div {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  #viewForm table {
+    width: 100% !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* Prevent rows from being split across pages */
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Slightly tighter print spacing so it stays on one page */
+  #viewForm,
+  #viewForm * {
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+  }
+
+  #viewForm table td,
+  #viewForm table th {
+    padding: 4px !important;
+  }
+
+  /* Remove any top margin that could push content down */
+  body, #viewForm {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+@media screen {
+  .service-request-form-page,
+  .service-request-form-page .layout,
+  .service-request-form-page .main,
+  .service-request-form-page .main-content,
+  .service-request-form-page .container-fluid {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .service-request-form-page #viewForm {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.35rem;
+  }
+
+  .service-request-form-page #viewForm > div {
+    box-sizing: border-box;
+    max-width: none !important;
+  }
+
+  .service-request-form-page .row.mb-3 .d-flex {
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 0.5rem;
+  }
+
+  .service-request-form-page .row.mb-3 .btn,
+  .service-request-form-page .back-left {
+    left: 0;
+    width: auto !important;
+    min-width: 0;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
+  .service-request-form-page .main-content {
+    padding: 0;
+  }
+
+  .service-request-form-page .container-fluid {
+    padding: 0.75rem !important;
+  }
+
+  .service-request-form-page #viewForm > div {
+    min-width: 860px;
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+  .service-request-form-page .container-fluid {
+    padding: 0.5rem !important;
+  }
+
+  .service-request-form-page .topbar-title {
+    font-size: 1.05rem;
+  }
+
+  .service-request-form-page .row.mb-3 .d-flex {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center !important;
+  }
+
+  .service-request-form-page #viewForm > div {
+    min-width: 760px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .service-request-form-page #viewForm > div {
+    min-width: 700px;
+  }
+}
