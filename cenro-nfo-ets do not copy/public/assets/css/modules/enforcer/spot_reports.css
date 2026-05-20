@@ -1,0 +1,172 @@
+.badge { font-size: 0.7rem; padding: 4px 8px; border-radius: 20px; }
+.badge.bg-success { background-color: #28a745 !important; }
+.badge.bg-warning { background-color: #ffc107 !important; color: #212529 !important; }
+.badge.bg-danger { background-color: #dc3545 !important; }
+
+.admin-spot-reports-page .main-content {
+  background: #ECEFF1;
+  min-height: 100vh;
+}
+
+.filter-section {
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.mobile-filter-toggle {
+  border-radius: 10px;
+}
+
+.mobile-filter-panel {
+  margin-top: 0;
+}
+
+/* Compact table styling */
+.table thead th,
+.table tbody td {
+  font-size: 0.85rem;
+  padding: 0.45rem 0.6rem;
+}
+
+.table thead th { font-size: 0.8rem; }
+.status-comment-btn i { font-size: 0.95rem; }
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.82rem; }
+
+/* Ensure Bootstrap utility classes like fs-6 don't enlarge these badges */
+.badge.fs-6 { font-size: 0.7rem !important; padding: 4px 8px !important; }
+
+.spot-filter-control {
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  height: 38px;
+}
+
+.spot-btn-apply {
+  border-radius: 8px;
+  background: #1976d2;
+  border: none;
+  height: 38px;
+  font-size: 14px;
+}
+
+.spot-btn-clear {
+  border-radius: 8px;
+  height: 38px;
+  font-size: 14px;
+}
+
+.spot-btn-new-report {
+  border-radius: 8px;
+  background: #1976d2;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.table-responsive {
+  border-radius: 0;
+}
+
+@media (max-width: 768px) {
+  .admin-spot-reports-page .container-fluid.p-4 {
+    padding: 0.75rem !important;
+  }
+
+  .admin-spot-reports-page .filter-section {
+    padding: 12px;
+  }
+
+  .admin-spot-reports-page .filter-section .row {
+    row-gap: 0.75rem;
+  }
+
+  .admin-spot-reports-page .filter-section .form-control,
+  .admin-spot-reports-page .filter-section .form-select,
+  .admin-spot-reports-page .filter-section .btn {
+    height: 36px;
+    font-size: 0.82rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .admin-spot-reports-page .table th,
+  .admin-spot-reports-page .table td {
+    padding: 8px 6px;
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-spot-reports-page .main-content {
+    padding: 0 !important;
+  }
+
+  .admin-spot-reports-page .container-fluid,
+  .admin-spot-reports-page .container-fluid.p-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.55rem !important;
+    margin: 0 !important;
+  }
+
+  .admin-spot-reports-page .sr-mobile-toolbar,
+  .admin-spot-reports-page .sr-active-filters,
+  .admin-spot-reports-page .filter-section,
+  .admin-spot-reports-page .row.mb-3,
+  .admin-spot-reports-page .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .admin-spot-reports-page .topbar-title {
+    font-size: 1.05rem;
+  }
+
+  .admin-spot-reports-page .filter-section {
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .admin-spot-reports-page .table-responsive {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-spot-reports-page .table {
+    min-width: 1080px;
+  }
+
+  .admin-spot-reports-page .card {
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .admin-spot-reports-page .spot-btn-new-report {
+    width: auto;
+    min-width: 148px;
+    padding: 0.6rem 0.95rem;
+    font-size: 0.88rem;
+  }
+
+  .admin-spot-reports-page .row.mb-3 > .col-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .admin-spot-reports-page .card {
+    margin-top: 0 !important;
+  }
+}

@@ -17,7 +17,7 @@ require_once __DIR__ . '/../../../helpers/qr_url.php';
   <!-- Admin common styles -->
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/common.css?v=20260515-sidebar">
   <!-- Equipment Management specific styles -->
-  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/equipment_management.css?v=20260520-missing-purple">
+  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/equipment_management.css?v=20260521-print-fit">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One:400&display=swap" rel="stylesheet">
 </head>
@@ -814,25 +814,25 @@ require_once __DIR__ . '/../../../helpers/qr_url.php';
     <table class="print-table" id="printTable">
       <thead>
         <tr>
-          <th style="width:6%">Asset ID</th>
-          <th style="width:8%">Property No.</th>
-          <th style="width:8%">Type</th>
-          <th style="width:8%">Brand / Model</th>
-          <th style="width:6%">Year</th>
-          <th style="width:8%">Office/Division</th>
-          <th style="width:8%">Accountable Person</th>
-          <th style="width:5%">A. Sex</th>
-          <th style="width:7%">A. Employment</th>
-          <th style="width:8%">Actual User</th>
-          <th style="width:5%">U. Sex</th>
-          <th style="width:7%">U. Employment</th>
-          <th style="width:8%">Nature of Work</th>
-          <th style="width:8%">Specs (Proc / RAM / GPU)</th>
-          <th style="width:8%">Software / Protection</th>
-          <th style="width:8%">Serial No.</th>
-          <th style="width:6%">Shelf Life</th>
-          <th style="width:6%">Status</th>
-          <th style="width:12%">Remarks</th>
+          <th style="width:4%">Asset ID</th>
+          <th style="width:6%">Property No.</th>
+          <th style="width:5%">Type</th>
+          <th style="width:7%">Brand / Model</th>
+          <th style="width:4%">Year</th>
+          <th style="width:6%">Office/Division</th>
+          <th style="width:7%">Accountable Person</th>
+          <th style="width:3%">A. Sex</th>
+          <th style="width:5%">A. Employment</th>
+          <th style="width:6%">Actual User</th>
+          <th style="width:3%">U. Sex</th>
+          <th style="width:5%">U. Employment</th>
+          <th style="width:6%">Nature of Work</th>
+          <th style="width:7%">Specs (Proc / RAM / GPU)</th>
+          <th style="width:7%">Software / Protection</th>
+          <th style="width:5%">Serial No.</th>
+          <th style="width:4%">Shelf Life</th>
+          <th style="width:4%">Status</th>
+          <th style="width:6%">Remarks</th>
         </tr>
       </thead>
       <tbody id="printTableBody">

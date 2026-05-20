@@ -1,0 +1,38 @@
+﻿/* Style inputs with light background; admin can edit fields here */
+input,
+textarea,
+select {
+  background-color: #f8f9fa !important;
+}
+
+/* Increase main content readability: enlarge base font and override tiny inline sizes */
+.main .main-content {
+  font-size: 14px;
+}
+
+.main .main-content table,
+.main .main-content td,
+.main .main-content th,
+.main .main-content input,
+.main .main-content select,
+.main .main-content textarea,
+.main .main-content .signature-box {
+  font-size: 14px !important;
+}
+
+.main .main-content .container-fluid {
+  max-width: 1100px;
+}
+
+/* Shift Back button left so it does not align with centered main content */
+.back-left {
+  position: relative;
+  left: -150px;
+}
+
+/* On narrow screens, keep Back button inside viewport */
+@media (max-width: 768px) {
+  .back-left {
+    left: 0;
+  }
+}

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/common.css?v=20260515-sidebar">
   <!-- Service Desk specific styles -->
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/service-desk.css">
-  <link rel="stylesheet" href="../../../../public/assets/css/modules/property_custodian/request_details.css?v=20260520-ack-gap-tight">
+  <link rel="stylesheet" href="../../../../public/assets/css/modules/property_custodian/request_details.css?v=20260521-print-checks">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One:400&display=swap" rel="stylesheet">
 </head>

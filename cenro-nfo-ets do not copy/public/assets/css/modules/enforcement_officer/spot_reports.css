@@ -1,0 +1,12 @@
+﻿.badge.bg-success {
+      background-color: #198754 !important;
+      color: white !important;
+    }
+    /* Compact table styling */
+    .table thead th, .table tbody td {
+      font-size: 0.85rem;
+      padding: 0.45rem 0.6rem;
+    }
+    .table thead th { font-size: 0.8rem; }
+    .status-comment-btn i { font-size: 0.95rem; }
+    .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.82rem; }

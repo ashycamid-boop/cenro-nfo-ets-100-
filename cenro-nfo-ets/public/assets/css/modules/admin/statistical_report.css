@@ -746,13 +746,13 @@
   }
 
   .admin-statistical-report-page #printMeta .print-brand {
-    grid-template-columns: 46px 1fr 46px !important;
+    grid-template-columns: 58px 1fr 58px !important;
     gap: 8px !important;
     margin-bottom: 2px !important;
   }
 
   .admin-statistical-report-page #printMeta .print-brand img {
-    height: 42px !important;
+    height: 54px !important;
   }
 
   .admin-statistical-report-page #printMeta .print-brand-center {

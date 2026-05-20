@@ -1,0 +1,173 @@
+/* Style inputs with light background; admin can edit fields here */
+    input, textarea, select {
+      background-color: #f8f9fa !important;
+    }
+    /* Increase main content readability: enlarge base font and override tiny inline sizes */
+    .main .main-content { font-size: 14px; }
+    .main .main-content table,
+    .main .main-content td,
+    .main .main-content th,
+    .main .main-content input,
+    .main .main-content select,
+    .main .main-content textarea,
+    .main .main-content .signature-box {
+      font-size: 14px !important;
+    }
+    .main .main-content .container-fluid { max-width: 1100px; }
+    /* Shift Back button left so it doesn't align with centered main content */
+    .back-left { position: relative; left: -150px; }
+    /* Prevent horizontal scroll and keep main containers free to expand */
+    html, body { overflow-x: hidden; }
+    .layout, .main, .main-content, .container-fluid { overflow: visible !important; max-height: none !important; height: auto !important; }
+    @media (max-width: 768px) { .back-left { left: 0; } }
+
+/* Mobile-friendly edit request layout */
+.admin-edit-requests-page,
+.admin-edit-requests-page .layout,
+.admin-edit-requests-page .main,
+.admin-edit-requests-page .main-content {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.admin-edit-requests-page .container-fluid,
+.admin-edit-requests-page #editForm,
+.admin-edit-requests-page .srf-document {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.admin-edit-requests-page .srf-document {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-edit-requests-page .srf-document > table,
+.admin-edit-requests-page .srf-document > div {
+  min-width: 760px;
+}
+
+.admin-edit-requests-page input,
+.admin-edit-requests-page textarea,
+.admin-edit-requests-page select {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 991.98px) {
+  .admin-edit-requests-page .container-fluid.p-4 {
+    padding: 0.75rem !important;
+  }
+
+  .admin-edit-requests-page .topbar-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 .d-flex {
+    align-items: flex-start !important;
+    gap: 0.5rem;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 form.ms-2 {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-edit-requests-page {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .admin-edit-requests-page .topbar-card {
+    padding: 10px 12px !important;
+    border-radius: 0 !important;
+  }
+
+  .admin-edit-requests-page .topbar-title {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .admin-edit-requests-page .main-content {
+    padding: 0.65rem !important;
+  }
+
+  .admin-edit-requests-page .container-fluid.p-4 {
+    padding: 0 !important;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 {
+    margin: 0 0 0.65rem !important;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 .d-flex {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    align-items: start !important;
+    gap: 0.5rem;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 .btn,
+  .admin-edit-requests-page .d-flex.justify-content-end .btn {
+    width: auto !important;
+    min-width: 62px;
+    padding: 5px 10px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.2;
+  }
+
+  .admin-edit-requests-page .container-fluid > .row.mb-3 .btn-group {
+    justify-content: flex-end;
+    gap: 0.35rem;
+  }
+
+  .admin-edit-requests-page .srf-document {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    background: #fff;
+  }
+
+  .admin-edit-requests-page .srf-document > table,
+  .admin-edit-requests-page .srf-document > div {
+    min-width: 680px;
+  }
+
+  .admin-edit-requests-page .main .main-content table,
+  .admin-edit-requests-page .main .main-content td,
+  .admin-edit-requests-page .main .main-content th,
+  .admin-edit-requests-page .main .main-content input,
+  .admin-edit-requests-page .main .main-content select,
+  .admin-edit-requests-page .main .main-content textarea,
+  .admin-edit-requests-page .main .main-content .signature-box {
+    font-size: 10px !important;
+  }
+
+  .admin-edit-requests-page .signature-box {
+    min-height: 48px;
+  }
+
+  .admin-edit-requests-page .modal-dialog {
+    margin: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .admin-edit-requests-page .main-content {
+    padding: 0.45rem !important;
+  }
+
+  .admin-edit-requests-page .srf-document > table,
+  .admin-edit-requests-page .srf-document > div {
+    min-width: 640px;
+  }
+}

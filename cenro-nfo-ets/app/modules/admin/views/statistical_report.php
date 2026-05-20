@@ -18,7 +18,7 @@
   <!-- Admin common styles -->
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/common.css?v=20260515-sidebar">
   <!-- Statistical Report specific styles -->
-  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/statistical_report.css?v=20260515-pdf2">
+  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/statistical_report.css?v=20260521-pdf-logo">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One:400&display=swap" rel="stylesheet">
 </head>
@@ -141,6 +141,6 @@
   <script src="../../../../public/assets/js/admin/dashboard.js"></script>
   <!-- Admin Navigation JavaScript -->
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260320-1"></script>
-  <script src="../../../../public/assets/js/admin/statistical_report.js?v=20260515-excel5"></script>
+  <script src="../../../../public/assets/js/admin/statistical_report.js?v=20260521-pdf-logo"></script>
 </body>
 </html>

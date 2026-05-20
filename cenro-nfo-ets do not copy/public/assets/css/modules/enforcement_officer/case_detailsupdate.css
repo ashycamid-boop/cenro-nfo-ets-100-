@@ -1,0 +1,146 @@
+﻿.bg-purple {
+      background-color: #6f42c1 !important;
+      color: white !important;
+    }
+    .bg-orange {
+      background-color: #fd7e14 !important;
+      color: white !important;
+    }
+    .bg-teal {
+      background-color: #20c997 !important;
+      color: white !important;
+    }
+    .bg-indigo {
+      background-color: #6610f2 !important;
+      color: white !important;
+    }
+    .bg-pink {
+      background-color: #e83e8c !important;
+      color: white !important;
+    }
+    .bg-cyan {
+      background-color: #0dcaf0 !important;
+      color: white !important;
+    }
+    .bg-success {
+      background-color: #198754 !important;
+      color: white !important;
+    }
+    .badge.bg-success {
+      background-color: #28a745 !important;
+      color: white !important;
+    }
+.badge.bg-primary {
+      background-color: #0d6efd !important;
+      color: white !important;
+    }
+
+.enforcement-officer-case-detailsupdate-page .main-content {
+  background: #eceff1;
+}
+
+.enforcement-officer-case-detailsupdate-page .action-buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.enforcement-officer-case-detailsupdate-page .action-buttons .btn {
+  min-width: 88px;
+}
+
+.enforcement-officer-case-detailsupdate-page .report-section {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.enforcement-officer-case-detailsupdate-page .report-section > .table {
+  min-width: 1040px;
+}
+
+.enforcement-officer-case-detailsupdate-page .report-section > .table[style*="width: 280px"] {
+  min-width: 280px;
+}
+
+@media (max-width: 767.98px) {
+  .enforcement-officer-case-detailsupdate-page .main-content {
+    padding: 0 0 18px;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .action-buttons {
+    padding: 0 14px !important;
+    margin: 14px 0 !important;
+    gap: 0.5rem;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .action-buttons .btn {
+    width: auto;
+    min-width: 82px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .container-fluid {
+    margin: 0 12px;
+    padding: 18px !important;
+    border-radius: 18px;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .report-header .d-flex {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .report-header .logo-left,
+  .enforcement-officer-case-detailsupdate-page .report-header .logo-right {
+    width: 56px;
+    height: 56px;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .header-content {
+    min-width: 100%;
+    order: 3;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .header-content h6 {
+    font-size: 0.76rem;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .header-content h4 {
+    font-size: 1.15rem;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .report-section {
+    margin-bottom: 16px;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .report-section > .table {
+    min-width: 920px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .enforcement-officer-case-detailsupdate-page .container-fluid {
+    margin: 0 10px;
+    padding: 16px !important;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .report-header {
+    margin-bottom: 18px !important;
+  }
+
+  .enforcement-officer-case-detailsupdate-page .report-section > .table {
+    min-width: 880px;
+  }
+}
+    .status-disposed {
+      background-color: #28a745 !important;
+      color: white !important;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }

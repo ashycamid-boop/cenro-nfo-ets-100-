@@ -1,0 +1,122 @@
+.enforcer-new-spot-report-page .topbar {
+  margin-top: 0 !important;
+}
+
+.enforcer-new-spot-report-page .topbar-title {
+  font-family: 'Fredoka One', cursive;
+  color: #0038A8;
+}
+
+.enforcer-new-spot-report-page .main .container-fluid {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.enforcer-new-spot-report-page .action-buttons {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: left !important;
+}
+
+.enforcer-new-spot-report-page .enforcer-new-spot-back-btn {
+  display: inline-flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto !important;
+  margin-left: 0 !important;
+  border-radius: 12px;
+  font-weight: 600;
+  width: auto !important;
+  min-width: 78px;
+  max-width: 96px;
+  padding: 0.38rem 0.68rem;
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.enforcer-new-spot-report-page .enforcer-new-spot-submit-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.enforcer-new-spot-report-page .enforcer-new-spot-submit-actions .btn {
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 991px) {
+  .enforcer-new-spot-report-page .main .container-fluid {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .enforcer-new-spot-report-page .main-content {
+    padding: 0 !important;
+  }
+
+  .enforcer-new-spot-report-page .container-fluid,
+  .enforcer-new-spot-report-page .container-fluid.p-4 {
+    padding: 0.55rem !important;
+  }
+
+  .enforcer-new-spot-report-page .topbar-title {
+    font-size: 1rem;
+  }
+
+  .enforcer-new-spot-report-page .action-buttons {
+    padding: 0 0.55rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .enforcer-new-spot-report-page .enforcer-new-spot-back-btn {
+    min-width: 74px;
+    max-width: 90px;
+    padding: 0.34rem 0.62rem;
+    font-size: 0.78rem;
+  }
+
+  .enforcer-new-spot-report-page .enforcer-new-spot-submit-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .enforcer-new-spot-report-page .enforcer-new-spot-submit-actions .btn {
+    min-height: 40px;
+    min-width: 132px;
+    padding: 0.52rem 0.9rem;
+    font-size: 0.9rem;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .enforcer-new-spot-report-page .container-fluid,
+  .enforcer-new-spot-report-page .container-fluid.p-4 {
+    padding: 0.45rem !important;
+  }
+
+  .enforcer-new-spot-report-page .topbar-title {
+    font-size: 0.95rem;
+  }
+
+  .enforcer-new-spot-report-page .enforcer-new-spot-submit-actions .btn {
+    min-width: 120px;
+    padding: 0.48rem 0.8rem;
+    font-size: 0.86rem;
+  }
+
+  .enforcer-new-spot-report-page .enforcer-new-spot-back-btn {
+    min-width: 72px;
+    max-width: 86px;
+    padding: 0.32rem 0.58rem;
+    font-size: 0.76rem;
+  }
+}
+
