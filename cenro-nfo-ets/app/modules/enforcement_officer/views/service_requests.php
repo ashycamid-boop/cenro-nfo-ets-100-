@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/common.css?v=20260515-sidebar">
   <!-- Dashboard specific styles -->
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/dashboard.css">
-  <link rel="stylesheet" href="../../../../public/assets/css/modules/enforcement_officer/service_requests.css?v=20260517-responsive">
+  <link rel="stylesheet" href="../../../../public/assets/css/modules/enforcement_officer/service_requests.css?v=20260521-no-apply">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One:400&display=swap" rel="stylesheet">
 </head>
@@ -100,10 +100,6 @@
                 <input type="date" id="srDesktopDateTo" name="date_to" value="<?php echo htmlspecialchars($dateTo); ?>" class="form-control sr-control" onkeydown="return false;" onpaste="return false;" onclick="this.showPicker && this.showPicker()">
                 <span class="sr-date-icon" aria-hidden="true"><i class="fa fa-calendar"></i></span>
               </div>
-            </div>
-            <!-- Apply Button -->
-            <div class="col-md-1">
-              <button type="submit" class="btn btn-primary w-100 sr-btn-primary">Apply</button>
             </div>
             <!-- Clear Button -->
             <div class="col-md-1">
@@ -216,7 +212,7 @@
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260319-2"></script>
   <!-- Flatpickr JS -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../../../public/assets/js/enforcement_officer/service_requests.js?v=20260404-1"></script>
+  <script src="../../../../public/assets/js/enforcement_officer/service_requests.js?v=20260521-no-apply"></script>
 
   <div class="modal fade" id="serviceRequestFiltersModal" tabindex="-1" aria-labelledby="serviceRequestFiltersModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable sr-filters-modal-dialog">
@@ -248,7 +244,6 @@
           </div>
           <div class="modal-footer sr-filters-modal-footer">
             <a href="service_requests.php" class="btn btn-outline-secondary sr-btn-clear" id="srMobileClearAll">Clear All</a>
-            <button type="submit" class="btn btn-primary sr-btn-primary" id="srMobileApplyFilters">Apply Filters</button>
           </div>
         </form>
       </div>

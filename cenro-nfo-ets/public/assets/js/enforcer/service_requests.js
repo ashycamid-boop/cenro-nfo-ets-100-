@@ -46,7 +46,6 @@ function initializeServiceRequestFilters() {
   const dateToMobile = document.getElementById('srMobileDateTo');
   const activeFilters = document.getElementById('serviceRequestActiveFilters');
   const mobileClearAll = document.getElementById('srMobileClearAll');
-  const mobileApply = document.getElementById('srMobileApplyFilters');
   const tableBody = document.querySelector('.sr-table tbody');
   const filtersModal = document.getElementById('serviceRequestFiltersModal');
   const desktopForm = document.querySelector('.sr-filters-desktop');
@@ -166,15 +165,6 @@ function initializeServiceRequestFilters() {
       applyFilters();
     });
   });
-
-  if (mobileApply) {
-    mobileApply.addEventListener('click', function (event) {
-      event.preventDefault();
-      applyFilters();
-      const modal = filtersModal ? bootstrap.Modal.getInstance(filtersModal) : null;
-      if (modal) modal.hide();
-    });
-  }
 
   if (mobileClearAll) {
     mobileClearAll.addEventListener('click', function (event) {
