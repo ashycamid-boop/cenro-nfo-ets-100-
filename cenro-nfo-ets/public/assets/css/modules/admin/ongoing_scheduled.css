@@ -253,9 +253,8 @@
   }
 
   .admin-ongoing-scheduled-page .os-filters-modal-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
+    display: flex;
+    justify-content: flex-end;
     padding: 0.9rem 1rem 1rem;
   }
 

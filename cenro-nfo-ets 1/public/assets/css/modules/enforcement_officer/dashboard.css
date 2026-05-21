@@ -1,0 +1,137 @@
+/* Module-specific styles for Enforcement Officer dashboard */
+
+.enforcement-officer-dashboard-page .main-content {
+  padding: 1.25rem;
+}
+
+.enforcement-officer-dashboard-page .eo-dashboard-stat-card,
+.enforcement-officer-dashboard-page .eo-dashboard-chart-card {
+  border-radius: 18px !important;
+}
+
+.enforcement-officer-dashboard-page .eo-dashboard-chart-frame {
+  width: 100%;
+}
+
+@media (max-width: 991.98px) {
+  .enforcement-officer-dashboard-page .main-content {
+    padding: 1rem 0.85rem;
+  }
+
+  .enforcement-officer-dashboard-page .container-fluid.p-4 {
+    padding: 0 !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stats-row > [class*="col-"],
+  .enforcement-officer-dashboard-page .eo-dashboard-charts-row > [class*="col-"] {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card .card-body,
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card .card-body {
+    padding: 1.1rem !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-frame-bar,
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-frame-pie {
+    height: 280px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .enforcement-officer-dashboard-page .topbar-title {
+    font-size: 1.15rem;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card .card-body > .d-flex {
+    gap: 14px;
+    align-items: flex-start !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card h6 {
+    font-size: 0.72rem !important;
+    line-height: 1.35;
+    letter-spacing: 0.08em !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card h1 {
+    font-size: 2rem !important;
+    line-height: 1.05;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card .rounded-circle.shadow-lg {
+    width: 48px !important;
+    height: 48px !important;
+    flex: 0 0 48px;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card .rounded-circle.shadow-lg i {
+    font-size: 18px !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card small {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card .card-header {
+    padding: 1rem 1rem 0 !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card .card-header > .d-flex {
+    gap: 10px;
+    align-items: flex-start !important;
+    flex-wrap: wrap;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card .card-header h6 {
+    font-size: 0.94rem;
+    line-height: 1.35;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-frame-bar,
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-frame-pie {
+    height: 250px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .enforcement-officer-dashboard-page .main-content {
+    padding: 0.85rem 0.75rem;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stats-row,
+  .enforcement-officer-dashboard-page .eo-dashboard-charts-row {
+    row-gap: 10px;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stats-row > [class*="col-"],
+  .enforcement-officer-dashboard-page .eo-dashboard-charts-row > [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card,
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card {
+    border-radius: 16px !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card .card-body,
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card .card-body {
+    padding: 1rem !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-stat-card h1 {
+    font-size: 1.85rem !important;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-card .card-header h6 {
+    font-size: 0.92rem;
+  }
+
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-frame-bar,
+  .enforcement-officer-dashboard-page .eo-dashboard-chart-frame-pie {
+    height: 220px !important;
+  }
+}

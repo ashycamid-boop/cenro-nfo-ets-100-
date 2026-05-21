@@ -1,0 +1,361 @@
+.sr-control {
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  height: 38px;
+}
+
+.sr-date-field {
+  position: relative;
+}
+
+.sr-date-field .sr-control {
+  padding-right: 2.4rem;
+}
+
+.sr-date-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.sr-btn-primary {
+  border-radius: 8px;
+  background: #1976d2;
+  border: none;
+  height: 38px;
+  font-size: 14px;
+}
+
+.sr-btn-clear {
+  border-radius: 8px;
+  height: 38px;
+  font-size: 14px;
+}
+
+.sr-btn-new-request {
+  border-radius: 8px;
+  background: #1976d2;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.sr-mobile-toolbar,
+.sr-active-filters {
+  display: none;
+}
+
+.enforcement-service-requests-page .container-fluid {
+  width: 100%;
+  max-width: none;
+}
+
+.enforcement-service-requests-page .topbar-title {
+  min-width: 0;
+}
+
+.enforcement-service-requests-page .main-content {
+  padding: 20px;
+}
+
+.enforcement-service-requests-page .card {
+  border: 1px solid #ddd !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  overflow: hidden;
+  margin-top: 15px !important;
+}
+
+.enforcement-service-requests-page .table-responsive {
+  border-radius: 0 !important;
+}
+
+.enforcement-service-requests-page .sr-table {
+  min-width: 920px;
+  font-size: 0.85rem !important;
+}
+
+.enforcement-service-requests-page .sr-table td,
+.enforcement-service-requests-page .sr-table th {
+  vertical-align: middle;
+}
+
+.enforcement-service-requests-page .sr-table tr.sr-row-hidden {
+  display: none !important;
+}
+
+.enforcement-service-requests-page .sr-table tr.sr-row-visible {
+  display: table-row !important;
+}
+
+.enforcement-service-requests-page .sr-table th {
+  border-bottom: 1px solid #ddd !important;
+  border-top: none !important;
+  font-weight: 600 !important;
+  color: #444 !important;
+  padding: 12px 8px !important;
+  background: #f8f9fa !important;
+  font-size: 0.8rem !important;
+}
+
+.enforcement-service-requests-page .sr-table td {
+  padding: 12px 8px !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #eee !important;
+  border-top: none !important;
+  font-size: 0.85rem !important;
+}
+
+.enforcement-service-requests-page .sr-table .btn-sm {
+  padding: 6px 12px !important;
+  font-size: 0.8rem !important;
+}
+
+@media (max-width: 991.98px) {
+  .enforcement-service-requests-page .main-content {
+    padding: 0;
+  }
+
+  .enforcement-service-requests-page .container-fluid {
+    padding: 0.75rem !important;
+  }
+
+  .enforcement-service-requests-page .sr-filters {
+    row-gap: 0.75rem;
+  }
+
+  .enforcement-service-requests-page .sr-filters > div {
+    width: 100%;
+  }
+
+  .enforcement-service-requests-page .sr-actions-row .justify-content-end {
+    justify-content: flex-end !important;
+  }
+
+  .enforcement-service-requests-page .sr-btn-new-request {
+    width: auto;
+    min-width: 148px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .enforcement-service-requests-page .sr-filters-desktop {
+    display: none;
+  }
+
+  .enforcement-service-requests-page .sr-mobile-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .enforcement-service-requests-page .sr-mobile-search-form {
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  .enforcement-service-requests-page .sr-mobile-search-wrap {
+    position: relative;
+  }
+
+  .enforcement-service-requests-page .sr-mobile-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  .enforcement-service-requests-page .sr-mobile-search {
+    padding-left: 2.35rem;
+  }
+
+  .enforcement-service-requests-page .sr-mobile-filter-btn {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0.55rem 0.95rem;
+    border: 1px solid #d7e0ea;
+    border-radius: 12px;
+    background: #fff;
+    color: #1f2937;
+    font-size: 0.82rem;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  }
+
+  .enforcement-service-requests-page .sr-active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .enforcement-service-requests-page .sr-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0.42rem 0.68rem;
+    border-radius: 999px;
+    background: #edf4ff;
+    color: #174ea6;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .enforcement-service-requests-page .container-fluid {
+    padding: 0.3rem !important;
+  }
+
+  .enforcement-service-requests-page .topbar-title {
+    font-size: 1.05rem;
+  }
+
+  .enforcement-service-requests-page .sr-control,
+  .enforcement-service-requests-page .sr-btn-primary,
+  .enforcement-service-requests-page .sr-btn-clear {
+    width: 100%;
+    min-height: 40px;
+    font-size: 0.82rem;
+  }
+
+  .enforcement-service-requests-page .sr-actions-row .justify-content-end {
+    justify-content: flex-end !important;
+  }
+
+  .enforcement-service-requests-page .sr-btn-new-request {
+    width: auto;
+    min-width: 144px;
+    min-height: 38px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+    margin-left: auto;
+  }
+
+  .enforcement-service-requests-page .card {
+    border-radius: 6px !important;
+  }
+
+  .enforcement-service-requests-page .sr-filters-modal-dialog {
+    align-items: flex-end;
+    margin: 0;
+    min-height: 100%;
+  }
+
+  .enforcement-service-requests-page .sr-filters-modal-content {
+    border: 0;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.14);
+  }
+
+  .enforcement-service-requests-page .sr-filters-modal-content .modal-header {
+    padding: 1rem 1rem 0.85rem;
+  }
+
+  .enforcement-service-requests-page .sr-filters-modal-content .modal-body {
+    padding: 0.4rem 1rem 1rem;
+  }
+
+  .enforcement-service-requests-page .sr-modal-field {
+    margin-bottom: 0.9rem;
+  }
+
+  .enforcement-service-requests-page .sr-modal-field .form-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.4rem;
+  }
+
+  .enforcement-service-requests-page .sr-filters-modal-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+    padding: 0.9rem 1rem 1rem;
+  }
+
+  .enforcement-service-requests-page .sr-filters-modal-footer > * {
+    margin: 0;
+  }
+
+  .enforcement-service-requests-page .table-responsive {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .enforcement-service-requests-page .sr-table {
+    min-width: 1000px !important;
+    width: max-content !important;
+    table-layout: auto;
+  }
+
+  .enforcement-service-requests-page .sr-table thead {
+    display: table-header-group !important;
+  }
+
+  .enforcement-service-requests-page .sr-table tbody {
+    display: table-row-group !important;
+  }
+
+  .enforcement-service-requests-page .sr-table tr {
+    display: table-row !important;
+    width: auto !important;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .enforcement-service-requests-page .sr-table th,
+  .enforcement-service-requests-page .sr-table td {
+    display: table-cell !important;
+    width: auto !important;
+    padding: 0.58rem 0.7rem !important;
+    font-size: 0.82rem !important;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee !important;
+  }
+
+  .enforcement-service-requests-page .sr-table th {
+    padding: 0.62rem 0.7rem !important;
+    font-size: 0.79rem !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .enforcement-service-requests-page .sr-table td::before {
+    content: none !important;
+  }
+
+  .enforcement-service-requests-page .sr-table td[colspan] {
+    text-align: center !important;
+    padding: 1rem;
+  }
+
+  .enforcement-service-requests-page .sr-table td[data-label="Description of Request"] {
+    white-space: normal;
+  }
+
+  .enforcement-service-requests-page .sr-table td[data-label="Details"] {
+    min-width: 150px;
+  }
+
+  .enforcement-service-requests-page .sr-table td[data-label="Details"] .btn {
+    width: auto;
+    margin: 0 0.35rem 0 0 !important;
+    white-space: nowrap;
+  }
+
+  .enforcement-service-requests-page .sr-table td[data-label="Details"] .btn:last-child {
+    margin-right: 0 !important;
+  }
+}

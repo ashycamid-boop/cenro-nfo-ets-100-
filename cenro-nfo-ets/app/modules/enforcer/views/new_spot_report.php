@@ -247,14 +247,8 @@
 
             <!-- Submit Section -->
             <div class="report-section mb-4">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <h6>Status: <span class="badge bg-warning">Draft</span></h6>
-                </div>
+              <div class="d-flex justify-content-end align-items-center">
                 <div class="enforcer-new-spot-submit-actions">
-                  <button type="button" class="btn btn-secondary me-2" onclick="saveDraft()">
-                    <i class="fa fa-save"></i> Save as Draft
-                  </button>
                   <button type="submit" class="btn btn-primary">
                     <i class="fa fa-paper-plane"></i> Submit Report
                   </button>
@@ -276,6 +270,6 @@
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260320-1"></script>
 
     <!-- Spot Report Form JavaScript -->
-  <script src="../../../../public/assets/js/enforcer/new_spot_report.js?v=20260521-vehicle-impounded"></script>
+  <script src="../../../../public/assets/js/enforcer/new_spot_report.js?v=20260521-no-draft-button"></script>
 </body>
 </html>

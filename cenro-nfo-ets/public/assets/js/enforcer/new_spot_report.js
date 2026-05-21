@@ -561,28 +561,9 @@
       updateFileList(inputId, listId);
     }
 
-    // Save as draft — set action and submit (skip required-field validation)
-    function saveDraft() {
-      const form = document.getElementById('spotReportForm');
-      const actionInput = document.getElementById('formAction');
-      actionInput.value = 'save_draft';
-      form.submit();
-    }
-
     // Handle submission client-side: validate then submit form to server
-    function handleSubmit(e, saveAsDraft = false) {
-      const form = document.getElementById('spotReportForm');
+    function handleSubmit(e) {
       const actionInput = document.getElementById('formAction');
-
-      // determine if this submit is a draft save (either requested or already set)
-      const isDraft = saveAsDraft || (actionInput && actionInput.value === 'save_draft');
-
-      // If this is a draft, skip required-field validation
-      if (isDraft) {
-        // ensure hidden input reflects draft
-        if (actionInput) actionInput.value = 'save_draft';
-        return true; // allow normal submit to proceed
-      }
 
       if (e && e.preventDefault) {
         // Basic validation for full submit

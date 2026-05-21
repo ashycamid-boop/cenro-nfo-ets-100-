@@ -1,0 +1,302 @@
+﻿@media print {
+      /* Hide non-printable elements */
+      .sidebar, .topbar, .action-buttons {
+        display: none !important;
+      }
+      
+      /* Adjust main content for print */
+      .main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+      
+      .main-content {
+        margin: 0 !important;
+        padding: 20px !important;
+      }
+      
+      .container-fluid {
+        padding: 0 !important;
+      }
+      
+      /* Print-specific styling */
+      body {
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+      }
+      
+      .report-header {
+        page-break-inside: avoid;
+        margin-bottom: 20px !important;
+      }
+      
+      .report-section {
+        page-break-inside: avoid;
+        margin-bottom: 15px !important;
+      }
+      
+      .table {
+        font-size: 11px !important;
+      }
+      
+      .table th,
+      .table td {
+        padding: 5px !important;
+        border: 1px solid #000 !important;
+      }
+      
+      .table thead th {
+        background-color: #f8f9fa !important;
+        font-weight: bold !important;
+      }
+      
+      /* Logo sizing for print */
+      .logo-left, .logo-right {
+        width: 60px !important;
+        height: auto !important;
+      }
+      
+      /* Badge styling for print */
+      .badge {
+        border: 1px solid #000 !important;
+        padding: 3px 6px !important;
+        color: #000 !important;
+        background-color: #fff !important;
+      }
+      
+      /* File items for print */
+      .file-item {
+        margin-bottom: 5px !important;
+      }
+      
+      /* Force black text */
+      * {
+        color: #000 !important;
+      }
+      
+      /* Page breaks */
+      .page-break {
+        page-break-before: always;
+      }
+    }
+
+/* Increase the inner content max width so the report area is wider */
+    .main .main-content .container-fluid {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+/* Add a bit more internal padding to match case details spacing */
+    .main .main-content {
+      padding: 2rem !important;
+    }
+
+.enforcement-officer-view-spot-report-page .topbar {
+      background: #eceff1 !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: center !important;
+      width: 100%;
+      margin: 0 !important;
+      min-height: 0 !important;
+    }
+
+.enforcement-officer-view-spot-report-page .topbar-card {
+      width: 100% !important;
+      margin: 0 !important;
+      background: #fff;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between;
+    }
+
+.enforcement-officer-view-spot-report-page .action-buttons {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+.enforcement-officer-view-spot-report-page .action-buttons .btn-secondary {
+      width: auto !important;
+      min-width: 88px;
+      padding: 6px 14px !important;
+      font-size: 0.85rem !important;
+      border-radius: 6px !important;
+      align-self: flex-start;
+    }
+
+@media (max-width: 991.98px) {
+      .enforcement-officer-view-spot-report-page .main .main-content {
+        padding: 1.25rem !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .main .main-content .container-fluid {
+        max-width: 100%;
+        padding: 1.5rem !important;
+      }
+    }
+
+@media (max-width: 767.98px) {
+      .enforcement-officer-view-spot-report-page .main {
+        padding-top: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .topbar {
+        display: flex !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        background: #eceff1 !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        min-height: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .topbar-card {
+        padding: 12px 14px !important;
+        border-radius: 0 !important;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .main .main-content {
+        margin-top: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .topbar-title {
+        font-size: 1.05rem;
+      }
+
+      .enforcement-officer-view-spot-report-page .action-buttons {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-bottom: 0.9rem !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .action-buttons .btn {
+        width: auto;
+      }
+
+      .enforcement-officer-view-spot-report-page .main .main-content .container-fluid {
+        margin: 0;
+        padding: 1.15rem !important;
+        border-radius: 16px;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-header .d-flex {
+        gap: 12px;
+        align-items: flex-start !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .logo-left,
+      .enforcement-officer-view-spot-report-page .logo-right {
+        width: 48px;
+        height: 48px;
+      }
+
+      .enforcement-officer-view-spot-report-page .header-content h6 {
+        font-size: 0.72rem;
+        line-height: 1.25;
+      }
+
+      .enforcement-officer-view-spot-report-page .header-content h4 {
+        font-size: 1rem;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-section {
+        margin-bottom: 1rem;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-section {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-section .table {
+        min-width: 620px;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-section .row > [class*="col-"] + [class*="col-"] {
+        margin-top: 0.9rem;
+      }
+    }
+
+@media (max-width: 575.98px) {
+      .enforcement-officer-view-spot-report-page .main {
+        padding-top: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .topbar {
+        display: flex !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        background: #eceff1 !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        min-height: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .topbar-card {
+        padding: 10px 12px !important;
+        border-radius: 0 !important;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .main .main-content {
+        padding: 0.85rem !important;
+        margin-top: 0 !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .main .main-content .container-fluid {
+        padding: 1rem !important;
+        border-radius: 14px;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-header {
+        margin-bottom: 1rem !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .report-header .d-flex {
+        gap: 8px;
+      }
+
+      .enforcement-officer-view-spot-report-page .logo-left,
+      .enforcement-officer-view-spot-report-page .logo-right {
+        width: 40px;
+        height: 40px;
+      }
+
+      .enforcement-officer-view-spot-report-page .header-content {
+        padding: 0 2px;
+      }
+
+      .enforcement-officer-view-spot-report-page .header-content h6 {
+        font-size: 0.67rem;
+      }
+
+      .enforcement-officer-view-spot-report-page .header-content h4 {
+        font-size: 0.92rem;
+        margin-top: 0.75rem !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .table th,
+      .enforcement-officer-view-spot-report-page .table td {
+        padding: 6px 7px;
+        font-size: 0.72rem;
+      }
+
+      .enforcement-officer-view-spot-report-page .field-label,
+      .enforcement-officer-view-spot-report-page .report-section h6,
+      .enforcement-officer-view-spot-report-page .table tbody tr td {
+        font-size: 0.72rem !important;
+      }
+
+      .enforcement-officer-view-spot-report-page .badge {
+        font-size: 0.72rem;
+        padding: 5px 9px;
+      }
+    }

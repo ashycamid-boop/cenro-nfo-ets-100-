@@ -21,11 +21,10 @@
   var dateToInput = document.getElementById('date_to');
   var dateFromModalInput = document.getElementById('allRequestsDateFromModal');
   var dateToModalInput = document.getElementById('allRequestsDateToModal');
-  var applyBtn = document.getElementById('applyFilter');
   var clearBtn = document.getElementById('clearFilter');
-  var applyBtnMobile = document.getElementById('applyFilterMobile');
   var clearBtnMobile = document.getElementById('clearFilterMobile');
   var activeFilters = document.getElementById('allRequestsActiveFilters');
+  var filtersModal = document.getElementById('allRequestsFiltersModal');
   var table = document.getElementById('allRequestsTable');
   var tbody = table ? table.tBodies[0] : null;
 
@@ -100,16 +99,50 @@
     renderActiveFilters();
   }
 
-  if (applyBtn) applyBtn.addEventListener('click', function (e) { e.preventDefault(); applyFilter(); });
   if (clearBtn) clearBtn.addEventListener('click', function (e) { e.preventDefault(); clearFilter(); });
 
-  if (applyBtnMobile) applyBtnMobile.addEventListener('click', function (e) { e.preventDefault(); syncFromModal(); applyFilter(); });
   if (clearBtnMobile) clearBtnMobile.addEventListener('click', function (e) { e.preventDefault(); clearFilter(); });
 
   if (searchMobileInput) {
     searchMobileInput.addEventListener('input', function () {
       setAllSearch(searchMobileInput.value);
       applyFilter();
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      setAllSearch(searchInput.value);
+      applyFilter();
+    });
+  }
+
+  if (searchModalInput) {
+    searchModalInput.addEventListener('input', function () {
+      syncFromModal();
+      applyFilter();
+    });
+  }
+
+  [dateFromInput, dateToInput].forEach(function (input) {
+    if (!input) return;
+    input.addEventListener('input', applyFilter);
+    input.addEventListener('change', applyFilter);
+  });
+
+  [dateFromModalInput, dateToModalInput].forEach(function (input) {
+    if (!input) return;
+    function filterFromModal() {
+      syncFromModal();
+      applyFilter();
+    }
+    input.addEventListener('input', filterFromModal);
+    input.addEventListener('change', filterFromModal);
+  });
+
+  if (filtersModal) {
+    filtersModal.addEventListener('show.bs.modal', function () {
+      syncFromDesktop();
     });
   }
 

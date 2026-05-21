@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/common.css?v=20260515-sidebar">
   <!-- Service Desk specific styles -->
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/service-desk.css">
-  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/new_requests.css?v=20260319-3">
+  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/new_requests.css?v=20260521-no-apply">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One:400&display=swap" rel="stylesheet">
   <!-- Flatpickr datepicker CSS -->
@@ -96,7 +96,6 @@
             </div>
             <div class="col-md-3">
               <div class="filter-buttons">
-                <button id="applyFilter" class="btn btn-primary">Apply</button>
                 <button id="clearFilter" class="btn btn-outline-secondary">Clear</button>
               </div>
             </div>
@@ -171,7 +170,7 @@
   <script src="../../../../public/assets/js/admin/dashboard.js"></script>
   <!-- Admin Navigation JavaScript -->
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260319-2"></script>
-  <script src="../../../../public/assets/js/admin/new_requests.js?v=20260404-1"></script>
+  <script src="../../../../public/assets/js/admin/new_requests.js?v=20260521-no-apply"></script>
 
   <div class="modal fade" id="newRequestsFiltersModal" tabindex="-1" aria-labelledby="newRequestsFiltersModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable nr-filters-modal-dialog">
@@ -196,7 +195,6 @@
         </div>
         <div class="modal-footer nr-filters-modal-footer">
           <button type="button" id="clearFilterMobile" class="btn btn-outline-secondary">Clear All</button>
-          <button type="button" id="applyFilterMobile" class="btn btn-primary" data-bs-dismiss="modal">Apply Filters</button>
         </div>
       </div>
     </div>

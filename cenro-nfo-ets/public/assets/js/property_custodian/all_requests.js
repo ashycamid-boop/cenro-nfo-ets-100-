@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     return new Date(y, m, d);
   }
 
-  var applyBtn = document.getElementById('applyFilter');
   var clearBtn = document.getElementById('clearFilter');
   var table = document.getElementById('allRequestsTable');
   var tbody = table ? table.tBodies[0] : null;
@@ -57,6 +56,5 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tbody) Array.from(tbody.rows).forEach(function (row) { row.style.display = ''; });
   }
 
-  if (applyBtn) applyBtn.addEventListener('click', function (e) { e.preventDefault(); applyFilter(); });
   if (clearBtn) clearBtn.addEventListener('click', function (e) { e.preventDefault(); clearFilter(); });
 });

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/common.css?v=20260515-sidebar">
   <!-- Service Desk specific styles -->
   <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/service-desk.css">
-  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/all_requests.css?v=20260319-1">
+  <link rel="stylesheet" href="../../../../public/assets/css/modules/admin/all_requests.css?v=20260521-live-filter">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One:400&display=swap" rel="stylesheet">
 </head>
@@ -79,7 +79,6 @@
                 <input type="text" id="allRequestsSearch" class="form-control" placeholder="Search" style="width: 250px;">
                 <input type="text" id="date_from" class="form-control date-picker" placeholder="mm/dd/yyyy" style="width: 150px;" autocomplete="off">
                 <input type="text" id="date_to" class="form-control date-picker" placeholder="mm/dd/yyyy" style="width: 150px;" autocomplete="off">
-                <button id="applyFilter" class="btn btn-primary">Apply</button>
                 <button id="clearFilter" class="btn btn-outline-secondary">Clear</button>
               </div>
             </div>
@@ -203,7 +202,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../../../public/assets/js/admin/dashboard.js"></script>
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260319-2"></script>
-  <script src="../../../../public/assets/js/admin/all_requests.js"></script>
+  <script src="../../../../public/assets/js/admin/all_requests.js?v=20260521-live-filter"></script>
 
   <div class="modal fade" id="allRequestsFiltersModal" tabindex="-1" aria-labelledby="allRequestsFiltersModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ar-filters-modal-dialog">
@@ -228,7 +227,6 @@
         </div>
         <div class="modal-footer ar-filters-modal-footer">
           <button type="button" id="clearFilterMobile" class="btn btn-outline-secondary">Clear All</button>
-          <button type="button" id="applyFilterMobile" class="btn btn-primary" data-bs-dismiss="modal">Apply Filters</button>
         </div>
       </div>
     </div>

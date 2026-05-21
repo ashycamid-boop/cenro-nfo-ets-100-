@@ -22,9 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var dateToInput = document.getElementById('date_to');
   var dateFromModalInput = document.getElementById('newRequestsDateFromModal');
   var dateToModalInput = document.getElementById('newRequestsDateToModal');
-  var applyBtn = document.getElementById('applyFilter');
   var clearBtn = document.getElementById('clearFilter');
-  var applyBtnMobile = document.getElementById('applyFilterMobile');
   var clearBtnMobile = document.getElementById('clearFilterMobile');
   var activeFilters = document.getElementById('newRequestsActiveFilters');
   var filtersModal = document.getElementById('newRequestsFiltersModal');
@@ -133,24 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
     renderActiveFilters();
   }
 
-  if (applyBtn) {
-    applyBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      applyFilter();
-    });
-  }
   if (clearBtn) {
     clearBtn.addEventListener('click', function (e) {
       e.preventDefault();
       clearFilter();
-    });
-  }
-
-  if (applyBtnMobile) {
-    applyBtnMobile.addEventListener('click', function (e) {
-      e.preventDefault();
-      syncFromModal();
-      applyFilter();
     });
   }
 
