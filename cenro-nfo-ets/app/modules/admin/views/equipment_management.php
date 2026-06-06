@@ -758,6 +758,29 @@ require_once __DIR__ . '/../../../helpers/qr_url.php';
             </div>
           </div>
 
+          <h6 class="section-title">Actual User History</h6>
+          <div class="actual-user-history mb-3">
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th>Date Assigned</th>
+                    <th>Date Moved</th>
+                    <th>Previous User</th>
+                    <th>New User</th>
+                    <th>Status</th>
+                    <th>Changed By</th>
+                  </tr>
+                </thead>
+                <tbody id="actualUserHistoryTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">Loading history...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <!-- Remarks -->
           <h6 class="section-title">Remarks</h6>
           <div class="row">
@@ -860,6 +883,6 @@ require_once __DIR__ . '/../../../helpers/qr_url.php';
     window.CENRO_QR_VIEW_BASE_URL = <?php echo json_encode(cenro_project_url('public/qr_view.php?id=')); ?>;
   </script>
   <!-- Equipment Management JavaScript -->
-  <script src="../../../../public/assets/js/admin/equipment_management.js?v=20260520-table-search"></script>
+  <script src="../../../../public/assets/js/admin/equipment_management.js?v=20260606-actual-user-history-fields"></script>
 </body>
 </html>

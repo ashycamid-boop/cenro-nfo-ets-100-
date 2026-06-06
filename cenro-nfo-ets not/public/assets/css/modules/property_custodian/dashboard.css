@@ -1,0 +1,187 @@
+/* Module-specific styles for Property Custodian dashboard */
+
+.property-custodian-dashboard-page .main-content {
+  padding: 1.25rem;
+}
+
+.property-custodian-dashboard-page .pc-dashboard-stat-card,
+.property-custodian-dashboard-page .pc-dashboard-chart-card {
+  border-radius: 18px !important;
+}
+
+.property-custodian-dashboard-page .pc-dashboard-chart-frame {
+  width: 100%;
+}
+
+.property-custodian-dashboard-page .pc-dashboard-status-legend {
+  min-width: 0;
+}
+
+.property-custodian-dashboard-page .pc-dashboard-status-legend .fw-semibold {
+  line-height: 1.3;
+}
+
+@media (max-width: 991.98px) {
+  .property-custodian-dashboard-page .main-content {
+    padding: 1rem 0.85rem;
+  }
+
+  .property-custodian-dashboard-page .container-fluid.p-4 {
+    padding: 0 !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stats-row > [class*="col-"],
+  .property-custodian-dashboard-page .pc-dashboard-charts-row > [class*="col-"] {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card .card-body,
+  .property-custodian-dashboard-page .pc-dashboard-chart-card .card-body {
+    padding: 1.1rem !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-frame-wide {
+    height: 320px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-frame-status {
+    height: 230px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .property-custodian-dashboard-page .topbar-title {
+    font-size: 1.15rem;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card .card-body > .d-flex {
+    gap: 14px;
+    align-items: flex-start !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card .text-uppercase {
+    font-size: 0.72rem !important;
+    line-height: 1.35;
+    letter-spacing: 0.08em !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card h2 {
+    font-size: 2rem;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card .rounded-3 {
+    width: 48px !important;
+    height: 48px !important;
+    flex: 0 0 48px;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card .rounded-3 i {
+    font-size: 18px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-card .card-header > .d-flex {
+    gap: 10px;
+    align-items: flex-start !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-card .card-header small {
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-frame-wide {
+    height: 280px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-layout {
+    row-gap: 1rem;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-chart-col,
+  .property-custodian-dashboard-page .pc-dashboard-status-legend-col {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-frame-status {
+    height: 260px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-legend {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem 0.75rem !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-legend > div {
+    gap: 0.65rem !important;
+    align-items: flex-start !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-legend .rounded-circle {
+    width: 12px !important;
+    height: 12px !important;
+    margin-top: 4px;
+    margin-right: 0.65rem !important;
+    flex: 0 0 12px;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-legend .fw-semibold {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .property-custodian-dashboard-page .main-content {
+    padding: 0.85rem 0.75rem;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stats-row,
+  .property-custodian-dashboard-page .pc-dashboard-charts-row {
+    row-gap: 10px;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stats-row > [class*="col-"],
+  .property-custodian-dashboard-page .pc-dashboard-charts-row > [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card,
+  .property-custodian-dashboard-page .pc-dashboard-chart-card {
+    border-radius: 16px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card .card-body,
+  .property-custodian-dashboard-page .pc-dashboard-chart-card .card-body {
+    padding: 1rem !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-stat-card h2 {
+    font-size: 1.85rem;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-card .card-header {
+    padding: 1rem 1rem 0 !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-card .card-header h6 {
+    font-size: 0.94rem;
+    line-height: 1.35;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-frame-wide {
+    height: 240px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-chart-frame-status {
+    height: 220px !important;
+  }
+
+  .property-custodian-dashboard-page .pc-dashboard-status-legend {
+    grid-template-columns: 1fr;
+    gap: 0.75rem !important;
+  }
+}

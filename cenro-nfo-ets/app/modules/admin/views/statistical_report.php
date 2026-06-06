@@ -73,12 +73,14 @@
         <div class="topbar-card"> 
           <div class="controls">
             <label>From:</label>
-            <input type="month" id="from">
+            <input type="date" id="from">
             <label>To:</label>
-            <input type="month" id="to">
+            <input type="date" id="to">
             <label>Granularity:</label>
             <select id="granularity">
-              <option value="monthly">Monthly</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly" selected>Monthly</option>
               <option value="quarterly">Quarterly</option>
               <option value="yearly">Yearly</option>
             </select>
@@ -141,6 +143,6 @@
   <script src="../../../../public/assets/js/admin/dashboard.js"></script>
   <!-- Admin Navigation JavaScript -->
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260320-1"></script>
-  <script src="../../../../public/assets/js/admin/statistical_report.js?v=20260521-pdf-logo"></script>
+  <script src="../../../../public/assets/js/admin/statistical_report.js?v=20260606-date-picker"></script>
 </body>
 </html>

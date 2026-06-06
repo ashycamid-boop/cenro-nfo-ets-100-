@@ -1,0 +1,11 @@
+/* Increase the inner content max width so the report area is wider */
+      .main .main-content .container-fluid {
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      /* Add a bit more internal padding to match case details spacing */
+      .main .main-content {
+        padding: 2rem !important;
+      }
+

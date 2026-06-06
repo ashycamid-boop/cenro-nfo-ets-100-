@@ -8,6 +8,105 @@
     Chart.register(ChartDataLabels);
 
     const PALETTE = ['#2563eb','#10b981','#f59e0b','#ef4444','#8b5cf6','#14b8a6','#f97316','#06b6d4','#84cc16','#64748b'];
+    const MODULE_PALETTES = {
+      spot: ['#28a745', '#ffc107', '#dc3545'],
+      cases: ['#007bff', '#ffc107', '#6c757d', '#17a2b8', '#28a745', '#dc3545', '#343a40', '#20c997'],
+      app_individuals: ['#fd7e14', '#6f42c1', '#20c997', '#007bff', '#e83e8c', '#6c757d'],
+      app_vehicles: ['#6f42c1', '#fd7e14', '#20c997', '#007bff', '#6c757d'],
+      app_items: ['#20c997', '#fd7e14', '#6f42c1', '#007bff', '#ffc107'],
+      equipment: ['#198754', '#0d6efd', '#0dcaf0', '#ffc107', '#6f42c1', '#dc3545', '#6c757d'],
+      assignments: ['#0038A8', '#556b8a', '#0d6efd', '#20c997', '#6c757d'],
+      service_desk: ['#17a2b8', '#ffc107', '#28a745', '#dc3545', '#6c757d']
+    };
+    const MODULE_PRIMARY = {
+      spot: '#28a745',
+      cases: '#007bff',
+      app_individuals: '#fd7e14',
+      app_vehicles: '#6f42c1',
+      app_items: '#20c997',
+      equipment: '#198754',
+      assignments: '#0038A8',
+      service_desk: '#17a2b8'
+    };
+    const SEMANTIC_COLORS = {
+      spot: {
+        approved: '#28a745',
+        pending: '#ffc107',
+        rejected: '#dc3545',
+        denied: '#dc3545',
+        'under review': '#17a2b8',
+        under_review: '#17a2b8',
+        unknown: '#6c757d'
+      },
+      cases: {
+        'under investigation': '#007bff',
+        'pending review': '#ffc107',
+        'for filing': '#ffc107',
+        'filed in court': '#6c757d',
+        filed: '#6c757d',
+        ongoing: '#17a2b8',
+        'ongoing trial': '#17a2b8',
+        resolved: '#28a745',
+        dismissed: '#dc3545',
+        archived: '#343a40',
+        'on hold': '#dc3545',
+        'under appeal': '#20c997',
+        unknown: '#6c757d'
+      },
+      equipment: {
+        assigned: '#198754',
+        'in use': '#198754',
+        available: '#0d6efd',
+        returned: '#0dcaf0',
+        maintenance: '#ffc107',
+        'under maintenance': '#ffc107',
+        missing: '#6f42c1',
+        damaged: '#dc3545',
+        retired: '#dc3545',
+        decommissioned: '#dc3545',
+        'out of service': '#6c757d',
+        unknown: '#6c757d'
+      },
+      service_desk: {
+        pending: '#ffc107',
+        approved: '#28a745',
+        completed: '#28a745',
+        complete: '#28a745',
+        done: '#28a745',
+        ongoing: '#17a2b8',
+        'on going': '#17a2b8',
+        scheduled: '#0d6efd',
+        rejected: '#dc3545',
+        cancelled: '#dc3545',
+        unknown: '#6c757d'
+      },
+      app_individuals: {
+        male: '#0d6efd',
+        female: '#e83e8c',
+        unknown: '#6c757d'
+      },
+      app_items: {
+        custody: '#007bff',
+        disposed: '#28a745',
+        forfeited: '#6f42c1',
+        released: '#17a2b8',
+        pending: '#ffc107',
+        unknown: '#6c757d'
+      }
+    };
+    const paletteFor = key => {
+      if (typeof key === 'number') return PALETTE.map((_, i) => PALETTE[(key + i) % PALETTE.length]);
+      return MODULE_PALETTES[key] || PALETTE;
+    };
+    const normalizeColorKey = value => String(value || '').toLowerCase().replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const primaryColorFor = key => typeof key === 'number' ? PALETTE[key % PALETTE.length] : (MODULE_PRIMARY[key] || PALETTE[0]);
+    const colorForLabel = (key, label, index) => {
+      const palette = paletteFor(key);
+      const moduleColors = typeof key === 'string' ? SEMANTIC_COLORS[key] : null;
+      const normalized = normalizeColorKey(label);
+      if (moduleColors && moduleColors[normalized]) return moduleColors[normalized];
+      return palette[index % palette.length];
+    };
     const rgba = (hex,a=.35)=>{const m=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);return `rgba(${parseInt(m[1],16)},${parseInt(m[2],16)},${parseInt(m[3],16)},${a})`};
 
     /* ===== Period helpers (From/To months) ===== */
@@ -26,7 +125,7 @@
     }
     const toQuarter = m=>Math.floor((m-1)/3)+1;
     function aggregate(series, baseMonths, gran){
-      if (gran==='monthly') return {labels: baseMonths.map(x=>x.label), data: series.slice(0, baseMonths.length)};
+      if (gran==='daily' || gran==='weekly' || gran==='monthly') return {labels: baseMonths.map(x=>x.label), data: series.slice(0, baseMonths.length)};
       if (gran==='quarterly'){
         const map=new Map();
         baseMonths.forEach((bm,i)=>{const k=`${bm.y} Q${toQuarter(bm.m)}`; map.set(k,(map.get(k)||0)+(series[i]||0));});
@@ -86,6 +185,7 @@
     const mkBar = (id, labels, data, colorIdx=0)=>{
       const canvas = document.getElementById(id);
       if (!canvas) return;
+      const primaryColor = primaryColorFor(colorIdx);
       
       // Reset canvas animation
       canvas.classList.remove('loaded');
@@ -103,22 +203,22 @@
           datasets:[{
             data,
             backgroundColor: data.map((_, i) => {
-              if (isPrintMode) return PALETTE[(colorIdx + i) % PALETTE.length];
+              if (isPrintMode) return primaryColor;
               // Gradient colors for each bar
               const canvas = document.createElement('canvas');
               const ctx = canvas.getContext('2d');
               const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-              gradient.addColorStop(0, PALETTE[(colorIdx + i) % PALETTE.length]);
-              gradient.addColorStop(1, rgba(PALETTE[(colorIdx + i) % PALETTE.length], 0.3));
+              gradient.addColorStop(0, primaryColor);
+              gradient.addColorStop(1, rgba(primaryColor, 0.3));
               return gradient;
             }),
-            borderColor: isPrintMode ? '#1f2937' : PALETTE[colorIdx],
+            borderColor: isPrintMode ? '#1f2937' : primaryColor,
             borderWidth: isPrintMode ? 1 : 0,
             borderRadius: 12,
             borderSkipped: false,
             barThickness: 'flex',
             maxBarThickness: 50,
-            hoverBackgroundColor: data.map((_, i) => PALETTE[(colorIdx + i) % PALETTE.length]),
+            hoverBackgroundColor: data.map(() => primaryColor),
             hoverBorderColor: '#fff',
             hoverBorderWidth: 3,
             // Shadow effect
@@ -139,7 +239,7 @@
               backgroundColor: 'rgba(0, 0, 0, 0.8)',
               titleColor: '#fff',
               bodyColor: '#fff',
-              borderColor: PALETTE[colorIdx],
+              borderColor: primaryColor,
               borderWidth: 1,
               cornerRadius: 8,
               displayColors: false,
@@ -201,7 +301,7 @@
               // Add glow effect during animation
               const ctx = animation.chart.ctx;
               ctx.save();
-              ctx.shadowColor = PALETTE[colorIdx];
+              ctx.shadowColor = primaryColor;
               ctx.shadowBlur = 20;
               ctx.restore();
             },
@@ -229,7 +329,7 @@
         }, 300);
       }
     };
-    const mkPie = (id, labels, data, doughnut=false)=>{
+    const mkPie = (id, labels, data, doughnut=false, colorKey=0)=>{
       const canvas = document.getElementById(id);
       if (!canvas) return;
       
@@ -242,7 +342,7 @@
       canvas.style.opacity = isPrintMode ? '1' : '0.3';
       canvas.style.transform = isPrintMode ? 'scale(1)' : 'scale(0.98)';
       
-      const colors=labels.map((_,i)=>PALETTE[i%PALETTE.length]);
+      const colors=labels.map((label,i)=>colorForLabel(colorKey, label, i));
       charts[id]=new Chart(canvas,{
         type: doughnut?'doughnut':'pie',
         data:{labels,datasets:[{
@@ -344,6 +444,7 @@
     async function fetchStats(fromMonth='', toMonth=''){
       try{
         const params = new URLSearchParams();
+        params.set('granularity', document.getElementById('granularity').value || 'monthly');
         if (fromMonth && toMonth) {
           params.set('from', fromMonth);
           params.set('to', toMonth);
@@ -575,6 +676,17 @@
       const d = new Date(y, m - 1, 1);
       return d.toLocaleDateString(undefined, { month:'long', year:'numeric' });
     }
+    function datePretty(ymd){
+      if (!ymd || !/^\d{4}-\d{2}-\d{2}$/.test(String(ymd))) return String(ymd || '');
+      const [y,m,d] = String(ymd).split('-').map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
+    }
+    function periodPretty(value){
+      const text = String(value || '');
+      if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return datePretty(text);
+      if (/^\d{4}-\d{2}$/.test(text)) return monthPretty(text);
+      return text;
+    }
     function updatePrintMeta(){
       if (!printMetaDetails) return;
       const from = document.getElementById('from').value;
@@ -591,8 +703,8 @@
         printMetaDetails.textContent = `Reporting Period: All records | Granularity: ${labelize(gran)} | Generated on: ${stamp}`;
         return;
       }
-      const prettyFrom = monthPretty(from);
-      const prettyTo = monthPretty(to);
+      const prettyFrom = periodPretty(from);
+      const prettyTo = periodPretty(to);
       const rangeText = prettyFrom === prettyTo ? prettyFrom : `${prettyFrom} to ${prettyTo}`;
       printMetaDetails.textContent = `Reporting Period: ${rangeText} | Granularity: ${labelize(gran)} | Generated on: ${stamp}`;
     }
@@ -643,6 +755,7 @@
     function csvPeriodLabel(label){
       const text = String(label || '');
       if (/^\d{4}-\d{2}$/.test(text)) return monthPretty(text);
+      if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return datePretty(text);
       return text;
     }
     function csvDateStamp(){
@@ -841,7 +954,7 @@
         const exportScope = showAllEl.checked ? 'all' : activeTab;
         const metaRows = [
           ['Generated For', showAllEl.checked ? 'All Modules' : (document.querySelector('.tab.active')?.textContent || activeTab)],
-          ['Reporting Period', exportHasRange ? `${monthPretty(exportFrom)} to ${monthPretty(exportTo)}` : 'All records'],
+          ['Reporting Period', exportHasRange ? `${periodPretty(exportFrom)} to ${periodPretty(exportTo)}` : 'All records'],
           ['Granularity', labelize(document.getElementById('granularity').value)],
           ['Exported At', new Date().toLocaleString()]
         ];
@@ -1026,7 +1139,7 @@
       sections.push(['CENRO Nasipit Statistical Report']);
       sections.push(['Generated For', showAllEl.checked ? 'All Modules' : (sectionMap[activeTab]?.name || activeTab)]);
       sections.push(['Scope', showAllEl.checked ? 'All Modules' : (sectionMap[activeTab]?.name || activeTab)]);
-      sections.push(['Reporting Period', hasRange ? `${monthPretty(from)} to ${monthPretty(to)}` : 'All records']);
+      sections.push(['Reporting Period', hasRange ? `${periodPretty(from)} to ${periodPretty(to)}` : 'All records']);
       sections.push(['Granularity', labelize(gran)]);
       sections.push(['Exported At', new Date().toLocaleString()]);
       sections.push(['Notes', 'Counts are based on the selected dashboard filters at export time.']);
@@ -1147,43 +1260,43 @@
         // TAB MODE
         if (activeTab==='spot'){
           host.innerHTML = gridStart + card('spotBar',`Spot Reports Over Time (${labelize(gran)})`) + card('spotPie','Spot Report Status Distribution') + gridEnd;
-          mkBar('spotBar', spotSeries.labels, spotSeries.data, 0);
-          mkPie('spotPie', spotStatusLabels, spotStatusCounts, true);
+          mkBar('spotBar', spotSeries.labels, spotSeries.data, 'spot');
+          mkPie('spotPie', spotStatusLabels, spotStatusCounts, true, 'spot');
         }
         else if (activeTab==='cases'){
           host.innerHTML = gridStart + card('caseBar',`Cases Opened Over Time (${labelize(gran)})`) + card('casePie','Case Status Distribution') + gridEnd;
-          mkBar('caseBar', caseSeries.labels, caseSeries.data, 5);
-          mkPie('casePie', caseStatusLabels, caseStatusCounts, true);
+          mkBar('caseBar', caseSeries.labels, caseSeries.data, 'cases');
+          mkPie('casePie', caseStatusLabels, caseStatusCounts, true, 'cases');
         }
         else if (activeTab==='app_individuals'){
           host.innerHTML = gridStart + card('indBar',`Individuals Apprehended Over Time (${labelize(gran)})`) + card('genderPie','Gender Distribution') + gridEnd;
-          mkBar('indBar', indSeries.labels, indSeries.data, 3);
-          mkPie('genderPie', genderLabels, genderCounts, true);
+          mkBar('indBar', indSeries.labels, indSeries.data, 'app_individuals');
+          mkPie('genderPie', genderLabels, genderCounts, true, 'app_individuals');
         }
         else if (activeTab==='app_vehicles'){
           host.innerHTML = gridStart + card('vehBar',`Vehicles Apprehended Over Time (${labelize(gran)})`) + card('vehPie','Vehicle Status Distribution') + gridEnd;
-          mkBar('vehBar', vehSeries.labels, vehSeries.data, 1);
-          mkPie('vehPie', vehicleStatusLabels, vehicleStatusCounts, true);
+          mkBar('vehBar', vehSeries.labels, vehSeries.data, 'app_vehicles');
+          mkPie('vehPie', vehicleStatusLabels, vehicleStatusCounts, true, 'app_vehicles');
         }
         else if (activeTab==='app_items'){
           host.innerHTML = gridStart + card('itmBar',`Items Apprehended Over Time (${labelize(gran)})`) + card('itmPie','Item Type Distribution') + gridEnd;
-          mkBar('itmBar', itemSeries.labels, itemSeries.data, 6);
-          mkPie('itmPie', itemTypeLabels, itemTypeCounts, true);
+          mkBar('itmBar', itemSeries.labels, itemSeries.data, 'app_items');
+          mkPie('itmPie', itemTypeLabels, itemTypeCounts, true, 'app_items');
         }
         else if (activeTab==='equipment'){
           host.innerHTML = gridStart + card('equipmentBar',`Equipment Added Over Time (${labelize(gran)})`) + card('equipmentPie','Equipment Status Distribution') + gridEnd;
-          mkBar('equipmentBar', equipmentSeries.labels, equipmentSeries.data, 2);
-          mkPie('equipmentPie', equipmentStatusLabels, equipmentStatusCounts, true);
+          mkBar('equipmentBar', equipmentSeries.labels, equipmentSeries.data, 'equipment');
+          mkPie('equipmentPie', equipmentStatusLabels, equipmentStatusCounts, true, 'equipment');
         }
         else if (activeTab==='assignments'){
           host.innerHTML = gridStart + card('assignmentsBar','Assigned Users by Office/Unit') + card('assignmentsPie','Assigned Users by Role') + gridEnd;
-          mkBar('assignmentsBar', assignmentOfficeLabels, assignmentOfficeCounts, 4);
-          mkPie('assignmentsPie', assignmentRoleLabels, assignmentRoleCounts, true);
+          mkBar('assignmentsBar', assignmentOfficeLabels, assignmentOfficeCounts, 'assignments');
+          mkPie('assignmentsPie', assignmentRoleLabels, assignmentRoleCounts, true, 'assignments');
         }
         else if (activeTab==='service_desk'){
           host.innerHTML = gridStart + card('serviceBar',`Service Requests Over Time (${labelize(gran)})`) + card('servicePie','Service Request Status Distribution') + gridEnd;
-          mkBar('serviceBar', serviceSeries.labels, serviceSeries.data, 7);
-          mkPie('servicePie', serviceStatusLabels, serviceStatusCounts, true);
+          mkBar('serviceBar', serviceSeries.labels, serviceSeries.data, 'service_desk');
+          mkPie('servicePie', serviceStatusLabels, serviceStatusCounts, true, 'service_desk');
         }
       } else {
         // SHOW-ALL MODE
@@ -1199,22 +1312,22 @@
 
         host.innerHTML = sectionsHTML.join('');
 
-        mkBar('spotBar', spotSeries.labels, spotSeries.data, 0);
-        mkPie('spotPie', spotStatusLabels, spotStatusCounts, true);
-        mkBar('caseBar', caseSeries.labels, caseSeries.data, 5);
-        mkPie('casePie', caseStatusLabels, caseStatusCounts, true);
-        mkBar('indBar', indSeries.labels, indSeries.data, 3);
-        mkPie('genderPie', genderLabels, genderCounts, true);
-        mkBar('vehBar', vehSeries.labels, vehSeries.data, 1);
-        mkPie('vehPie', vehicleStatusLabels, vehicleStatusCounts, true);
-        mkBar('itmBar', itemSeries.labels, itemSeries.data, 6);
-        mkPie('itmPie', itemTypeLabels, itemTypeCounts, true);
-        mkBar('equipmentBar', equipmentSeries.labels, equipmentSeries.data, 2);
-        mkPie('equipmentPie', equipmentStatusLabels, equipmentStatusCounts, true);
-        mkBar('assignmentsBar', assignmentOfficeLabels, assignmentOfficeCounts, 4);
-        mkPie('assignmentsPie', assignmentRoleLabels, assignmentRoleCounts, true);
-        mkBar('serviceBar', serviceSeries.labels, serviceSeries.data, 7);
-        mkPie('servicePie', serviceStatusLabels, serviceStatusCounts, true);
+        mkBar('spotBar', spotSeries.labels, spotSeries.data, 'spot');
+        mkPie('spotPie', spotStatusLabels, spotStatusCounts, true, 'spot');
+        mkBar('caseBar', caseSeries.labels, caseSeries.data, 'cases');
+        mkPie('casePie', caseStatusLabels, caseStatusCounts, true, 'cases');
+        mkBar('indBar', indSeries.labels, indSeries.data, 'app_individuals');
+        mkPie('genderPie', genderLabels, genderCounts, true, 'app_individuals');
+        mkBar('vehBar', vehSeries.labels, vehSeries.data, 'app_vehicles');
+        mkPie('vehPie', vehicleStatusLabels, vehicleStatusCounts, true, 'app_vehicles');
+        mkBar('itmBar', itemSeries.labels, itemSeries.data, 'app_items');
+        mkPie('itmPie', itemTypeLabels, itemTypeCounts, true, 'app_items');
+        mkBar('equipmentBar', equipmentSeries.labels, equipmentSeries.data, 'equipment');
+        mkPie('equipmentPie', equipmentStatusLabels, equipmentStatusCounts, true, 'equipment');
+        mkBar('assignmentsBar', assignmentOfficeLabels, assignmentOfficeCounts, 'assignments');
+        mkPie('assignmentsPie', assignmentRoleLabels, assignmentRoleCounts, true, 'assignments');
+        mkBar('serviceBar', serviceSeries.labels, serviceSeries.data, 'service_desk');
+        mkPie('servicePie', serviceStatusLabels, serviceStatusCounts, true, 'service_desk');
       }
     }
 

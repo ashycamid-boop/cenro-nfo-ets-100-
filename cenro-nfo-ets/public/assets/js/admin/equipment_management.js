@@ -403,6 +403,59 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     }
 
+    function formatHistoryDate(value) {
+      if (!value) return '-';
+      const date = new Date(String(value).replace(' ', 'T'));
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function renderActualUserHistory(rows) {
+      const tbody = document.getElementById('actualUserHistoryTableBody');
+      if (!tbody) return;
+
+      if (!rows || rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No actual user history yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = rows.map(row => `
+        <tr>
+          <td>${escapeHtml(formatHistoryDate(row.date_assigned))}</td>
+          <td>${escapeHtml(formatHistoryDate(row.date_moved))}</td>
+          <td>${escapeHtml(row.previous_actual_user_display || 'Unassigned')}</td>
+          <td>${escapeHtml(row.new_actual_user_display || 'Unassigned')}</td>
+          <td>${escapeHtml(row.status || '-')}</td>
+          <td>${escapeHtml(row.changed_by_display || 'System')}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadActualUserHistory(id) {
+      const tbody = document.getElementById('actualUserHistoryTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Loading history...</td></tr>';
+
+      if (typeof EquipmentService === 'undefined' || typeof EquipmentService.getActualUserHistory !== 'function') {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">History service unavailable.</td></tr>';
+        return;
+      }
+
+      const result = await safeServiceCall(EquipmentService.getActualUserHistory(id));
+      if (!result || result.error || result.success === false) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Unable to load history.</td></tr>';
+        return;
+      }
+
+      renderActualUserHistory(result.data || result.history || []);
+    }
+
     async function viewEquipmentDetails(id) {
       const equipment = equipmentData[id];
       if (!equipment) return;
@@ -462,6 +515,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
 
       document.getElementById('equipmentDetailsModal').style.display = 'flex';
+      await loadActualUserHistory(equipment.id);
     }
 
     async function editEquipment(id) {

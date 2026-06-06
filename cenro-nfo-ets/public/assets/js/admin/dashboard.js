@@ -333,17 +333,27 @@ function initializeDashboardCharts() {
         new Chart(equipmentStatusCtx, {
             type: 'bar',
             data: {
-                labels: ['In Use', 'Available'],
+                labels: ['Assigned', 'Available', 'Returned', 'Under Maintenance', 'Missing', 'Damaged', 'Out of Service'],
                 datasets: [{
                     label: 'Equipment',
-                    data: [4, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0],
                     backgroundColor: [
-                        'rgba(40, 167, 69, 0.8)',
-                        'rgba(255, 193, 7, 0.8)'
+                        'rgba(25, 135, 84, 0.8)',
+                        'rgba(13, 110, 253, 0.8)',
+                        'rgba(13, 202, 240, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',
+                        'rgba(111, 66, 193, 0.8)',
+                        'rgba(220, 53, 69, 0.8)',
+                        'rgba(108, 117, 125, 0.8)'
                     ],
                     borderColor: [
-                        'rgba(40, 167, 69, 1)',
-                        'rgba(255, 193, 7, 1)'
+                        'rgba(25, 135, 84, 1)',
+                        'rgba(13, 110, 253, 1)',
+                        'rgba(13, 202, 240, 1)',
+                        'rgba(255, 193, 7, 1)',
+                        'rgba(111, 66, 193, 1)',
+                        'rgba(220, 53, 69, 1)',
+                        'rgba(108, 117, 125, 1)'
                     ],
                     borderWidth: 2,
                     borderRadius: 8

@@ -6,6 +6,101 @@
       const sigModal = new bootstrap.Modal(sigModalEl);
       const staffOptionsTemplate = document.getElementById("actionStaffOptionsTemplate");
       const staffOptionsHtml = staffOptionsTemplate ? staffOptionsTemplate.innerHTML : "<option value=\"\">-- Select staff --</option>";
+      const CURRENT_USER_ID = document.body.getAttribute("data-current-user-id") || "";
+
+      const requiredStyle = document.createElement('style');
+      requiredStyle.innerHTML = `
+        .signature-box{ position: relative; }
+        .signature-box.sig-required{ border:2px solid #b72b2b !important; box-shadow:0 0 8px rgba(183,43,43,0.18); animation:sigPulse 1.6s ease-in-out infinite; }
+        .signature-box.sig-required::after{ content:'Required'; position:absolute; top:-10px; right:-2px; background:#b72b2b; color:#fff; font-size:10px; padding:2px 6px; border-radius:3px; font-weight:700; }
+        .pending-signature-notice{ position:sticky; top:12px; z-index:20; border-left:4px solid #b72b2b; }
+        .pending-signature-toast{ position:fixed; top:20px; right:20px; z-index:9999; min-width:300px; max-width:380px; border-left:4px solid #b72b2b; box-shadow:0 4px 15px rgba(0,0,0,0.2); }
+        @keyframes sigPulse{ 0%{ box-shadow:0 0 0 rgba(183,43,43,0.06);} 50%{ box-shadow:0 0 14px rgba(183,43,43,0.12);} 100%{ box-shadow:0 0 0 rgba(183,43,43,0.06);} }
+      `;
+      document.head.appendChild(requiredStyle);
+      let pendingToastShown = false;
+
+      function hasSavedOrDrawnSignature(field, row) {
+        const hidden = document.getElementById(field + '_signature_data');
+        const existing = row ? row.querySelector('input[name="action_existing_signature_path[]"]') : null;
+        const preview = document.getElementById(field + '_preview');
+        const hasNew = hidden && hidden.value && hidden.value.trim() !== '';
+        const hasExistingPath = existing && existing.value && existing.value.trim() !== '';
+        const hasPreviewImage = preview && preview.tagName === 'IMG' && preview.getAttribute('src');
+        return Boolean(hasNew || hasExistingPath || hasPreviewImage);
+      }
+
+      function selectedSignerId(field) {
+        const selectName = field + '_user_id';
+        const signerSelect = document.querySelector(`select[name="${selectName}"]`);
+        const signerHidden = document.querySelector(`input[type="hidden"][name="${selectName}"]`);
+        return signerSelect ? String(signerSelect.value || '') : (signerHidden ? String(signerHidden.value || '') : '');
+      }
+
+      function findPendingCurrentUserSignatures() {
+        if (!CURRENT_USER_ID) return [];
+        const pending = [];
+
+        ['auth1', 'auth2'].forEach(function (field) {
+          const box = document.querySelector(`.signature-box[data-field="${field}"]`);
+          if (!box) return;
+          if (selectedSignerId(field) === String(CURRENT_USER_ID) && !hasSavedOrDrawnSignature(field)) {
+            pending.push({ box: box, label: field === 'auth1' ? 'Authorization' : 'Infrastructure Authorization' });
+          }
+        });
+
+        document.querySelectorAll('tr[data-action-row]').forEach(function (row) {
+          const box = row.querySelector('.signature-box[data-field^="action_sig_"]');
+          if (!box) return;
+          const field = box.getAttribute('data-field') || '';
+          let staffId = box.getAttribute('data-staff-id') || '';
+          const sel = row.querySelector('select[name="action_staff[]"]');
+          if (sel) staffId = sel.value || staffId;
+          if (String(staffId || '') === String(CURRENT_USER_ID) && !hasSavedOrDrawnSignature(field, row)) {
+            pending.push({ box: box, label: 'Action Staff' });
+          }
+        });
+
+        return pending;
+      }
+
+      function updatePendingSignatureNotice() {
+        const pending = findPendingCurrentUserSignatures();
+        document.querySelectorAll('.signature-box.sig-required').forEach(function (el) {
+          el.classList.remove('sig-required');
+        });
+
+        let notice = document.getElementById('pendingSignatureNotice');
+        if (!notice) {
+          notice = document.createElement('div');
+          notice.id = 'pendingSignatureNotice';
+          notice.className = 'alert alert-warning pending-signature-notice mb-3';
+          const host = document.querySelector('.main-content .container-fluid') || document.querySelector('.main-content') || document.body;
+          host.insertBefore(notice, host.firstChild);
+        }
+
+        if (pending.length === 0) {
+          notice.style.display = 'none';
+          return;
+        }
+
+        pending.forEach(function (item) {
+          item.box.classList.add('sig-required');
+        });
+        const labels = pending.map(function (item) { return item.label; }).filter(function (label, index, all) {
+          return all.indexOf(label) === index;
+        }).join(', ');
+        notice.innerHTML = '<strong>Your signature is required.</strong> Please check the highlighted signature field: ' + labels + '.';
+        notice.style.display = '';
+
+        if (!pendingToastShown) {
+          pendingToastShown = true;
+          const toast = document.createElement('div');
+          toast.className = 'alert alert-warning pending-signature-toast';
+          toast.innerHTML = '<strong>Notification:</strong><br>You have a request that requires your signature. (' + labels + ')';
+          document.body.appendChild(toast);
+        }
+      }
 
       function ensurePreviewIsImg(id) {
         const existing = document.getElementById(id);
@@ -23,7 +118,7 @@
       function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         const rect = canvas.getBoundingClientRect();
-        // guard: if modal hidden, rect may be 0 — avoid setting zero size
+        // guard: if modal hidden, rect may be 0 â€” avoid setting zero size
         const w = rect.width || 400;
         const h = rect.height || 200;
         canvas.width = w * ratio;
@@ -39,6 +134,22 @@
           signaturePad = null;
         }
         signaturePad = new SignaturePad(canvas, { backgroundColor: 'rgba(255,255,255,0)' });
+      }
+
+      function todayDateValue() {
+        const now = new Date();
+        const offsetDate = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+        return offsetDate.toISOString().slice(0, 10);
+      }
+
+      function autofillAuthorizationDate(field) {
+        if (field !== 'auth1' && field !== 'auth2') return;
+        const dateInput = document.querySelector(`input[name="${field}_date"]`);
+        if (dateInput && !dateInput.value) {
+          dateInput.value = todayDateValue();
+          const dateDisplay = document.getElementById(`${field}_date_display`);
+          if (dateDisplay) dateDisplay.textContent = dateInput.value;
+        }
       }
 
       window.addEventListener('resize', function(){
@@ -68,7 +179,6 @@
 
       // Use event delegation so dynamically added .signature-box elements work
       // Ignore signature boxes that are inside the read-only region (.no-edit-below)
-      const CURRENT_USER_ID = document.body.getAttribute("data-current-user-id") || "";
       document.addEventListener('click', function(e){
         const box = e.target.closest && e.target.closest('.signature-box');
         if (!box) return;
@@ -77,7 +187,8 @@
         if (field === 'auth1' || field === 'auth2') {
           const selectName = field + '_user_id';
           const signerSelect = document.querySelector(`select[name="${selectName}"]`);
-          const selectedSignerId = signerSelect ? String(signerSelect.value || '') : '';
+          const signerHidden = document.querySelector(`input[type="hidden"][name="${selectName}"]`);
+          const selectedSignerId = signerSelect ? String(signerSelect.value || '') : (signerHidden ? String(signerHidden.value || '') : '');
           if (!selectedSignerId) { alert('Please select an authorized user before signing.'); return; }
           if (!CURRENT_USER_ID || String(selectedSignerId) !== String(CURRENT_USER_ID)) { alert('Only the selected authorized user may sign this field.'); return; }
         }
@@ -113,6 +224,8 @@
           }
           if (hidden) hidden.value = dataURL;
           if (preview) { preview.src = dataURL; preview.style.display = 'block'; }
+          autofillAuthorizationDate(currentField);
+          updatePendingSignatureNotice();
           console.log('Signature saved to hidden for', currentField);
           return true;
         } catch (err) {
@@ -181,6 +294,7 @@
           addBtn.addEventListener('click', function(){
             const row = createRow(nextIndex++);
             tbody.appendChild(row);
+            updatePendingSignatureNotice();
           });
         }
       })();
@@ -211,6 +325,7 @@
                 }
               }
             }
+            updatePendingSignatureNotice();
           }
         }
       });
@@ -221,7 +336,9 @@
         const targetField = authSelect.name === 'auth1_user_id' ? 'auth1' : 'auth2';
         const box = document.querySelector(`.signature-box[data-field="${targetField}"]`);
         if (box) box.setAttribute('data-auth-user-id', authSelect.value || '');
+        updatePendingSignatureNotice();
       });
 
       try { resizeCanvas(); createSignaturePad(); } catch (e) { console.warn('initial signature pad setup failed', e); }
+      updatePendingSignatureNotice();
     })();

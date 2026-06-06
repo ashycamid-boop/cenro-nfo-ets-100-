@@ -154,6 +154,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id']) && !empty($_PO
     foreach ($auStmt->fetchAll(PDO::FETCH_ASSOC) as $au) {
       $authUsersById[(int)$au['id']] = trim((string)$au['full_name']);
     }
+    foreach ($authUsersById as $uid => $fullName) {
+      if (stripos($fullName, 'joan') !== false && stripos($fullName, 'jumawid') !== false) {
+        $auth2_user_id = (int)$uid;
+        break;
+      }
+    }
     if ($auth1_user_id > 0 && isset($authUsersById[$auth1_user_id])) {
       $auth1_name = $authUsersById[$auth1_user_id];
     }
@@ -187,6 +193,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id']) && !empty($_PO
     } elseif (empty($sessionUserId) || (string)$auth2_user_id !== (string)$sessionUserId) {
       $save_error = 'Signature not allowed: only the selected Infrastructure Authorization user may sign.';
     }
+  }
+
+  if (empty($save_error) && !empty($_POST['auth1_signature_data']) && empty($auth1_date)) {
+    $auth1_date = date('Y-m-d');
+  }
+  if (empty($save_error) && !empty($_POST['auth2_signature_data']) && empty($auth2_date)) {
+    $auth2_date = date('Y-m-d');
   }
 
   if (empty($save_error) && $existingAuth1Name !== '' && trim($auth1_name) !== $existingAuth1Name && empty($_POST['auth1_signature_data'])) {

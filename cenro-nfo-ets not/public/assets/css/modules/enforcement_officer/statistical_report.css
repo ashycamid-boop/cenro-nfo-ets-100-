@@ -1,0 +1,113 @@
+.enforcement-officer-statistical-report-page .report-content {
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 767.98px) {
+  .enforcement-officer-statistical-report-page .topbar + .topbar .topbar-card {
+    margin: 8px 12px 0 !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.35rem !important;
+    width: 100%;
+    align-items: stretch !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls label {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0.05rem 0.1rem 0 !important;
+    border-radius: 0 !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    min-height: 0 !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls input,
+  .enforcement-officer-statistical-report-page .controls select,
+  .enforcement-officer-statistical-report-page .controls button {
+    width: 100% !important;
+    min-height: 40px !important;
+    padding: 0.65rem 0.85rem !important;
+    border-radius: 14px !important;
+    font-size: 0.92rem !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls input,
+  .enforcement-officer-statistical-report-page .controls select {
+    border: 1px solid #dbe3ef !important;
+    background: #f8fbff !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .enforcement-officer-statistical-report-page .controls button {
+    font-weight: 700 !important;
+    box-shadow: 0 8px 18px rgba(0, 56, 168, 0.1);
+  }
+
+  .enforcement-officer-statistical-report-page .controls .toggle {
+    grid-column: auto !important;
+    margin-top: 0.1rem;
+    padding: 0.65rem 0.85rem !important;
+    border: 1px solid #dbe3ef !important;
+    border-radius: 14px !important;
+    background: #f8fbff !important;
+    justify-content: flex-start !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls .toggle label {
+    padding: 0 !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #1f2937 !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls .toggle input {
+    width: 18px !important;
+    height: 18px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .enforcement-officer-statistical-report-page .topbar + .topbar .topbar-card {
+    margin: 8px 10px 0 !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls {
+    gap: 0.3rem !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls input,
+  .enforcement-officer-statistical-report-page .controls select,
+  .enforcement-officer-statistical-report-page .controls button,
+  .enforcement-officer-statistical-report-page .controls .toggle {
+    min-height: 38px !important;
+    border-radius: 13px !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls label {
+    font-size: 0.78rem !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls input,
+  .enforcement-officer-statistical-report-page .controls select,
+  .enforcement-officer-statistical-report-page .controls button {
+    font-size: 0.88rem !important;
+    padding: 0.58rem 0.8rem !important;
+  }
+
+  .enforcement-officer-statistical-report-page .controls .toggle label {
+    font-size: 0.86rem !important;
+  }
+}

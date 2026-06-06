@@ -5,9 +5,12 @@
     .signature-box{ position: relative; }
     .signature-box.sig-required{ border:2px solid #b72b2b !important; box-shadow:0 0 8px rgba(183,43,43,0.18); animation: sigPulse 1.6s ease-in-out infinite; }
     .signature-box.sig-required::after{ content: 'Required'; position: absolute; top: -10px; right: -2px; background: #b72b2b; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+    .pending-signature-notice{ position:sticky; top:12px; z-index:20; border-left:4px solid #b72b2b; }
+    .pending-signature-toast{ position:fixed; top:20px; right:20px; z-index:9999; min-width:300px; max-width:380px; border-left:4px solid #b72b2b; box-shadow:0 4px 15px rgba(0,0,0,0.2); }
     @keyframes sigPulse{ 0%{ box-shadow:0 0 0 rgba(183,43,43,0.06);} 50%{ box-shadow:0 0 14px rgba(183,43,43,0.12);} 100%{ box-shadow:0 0 0 rgba(183,43,43,0.06);} }
   `;
   document.head.appendChild(style);
+  let pendingToastShown = false;
 
   const CURRENT_USER_ID = document.body.dataset.currentUserId || '';
   let currentField = null;
@@ -18,6 +21,77 @@
 
   const actionStaffOptionsTemplate = document.getElementById('actionStaffOptionsTemplate');
   const staffOptionsHtml = actionStaffOptionsTemplate ? actionStaffOptionsTemplate.innerHTML : '<option value="">-- Select staff --</option>';
+
+  function hasSavedOrDrawnActionSignature(field, row) {
+    const hidden = document.getElementById(field + '_signature_data');
+    const existing = row ? row.querySelector('input[name="action_existing_signature_path[]"]') : null;
+    const preview = document.getElementById(field + '_preview');
+    const hasNew = hidden && hidden.value && hidden.value.trim() !== '';
+    const hasExisting = existing && existing.value && existing.value.trim() !== '';
+    const hasPreviewImage = preview && preview.tagName === 'IMG' && preview.getAttribute('src');
+    return Boolean(hasNew || hasExisting || hasPreviewImage);
+  }
+
+  function findMissingActionSignatures(currentUserOnly) {
+    const missing = [];
+    document.querySelectorAll('tr[data-action-row]').forEach(function (row) {
+      const sel = row.querySelector('select[name="action_staff[]"]');
+      const box = row.querySelector('.signature-box[data-field^="action_sig_"]');
+      if (!sel || !box) return;
+      const staffId = sel.value || box.getAttribute('data-staff-id') || '';
+      if (!staffId) return;
+      if (currentUserOnly && String(staffId) !== String(CURRENT_USER_ID)) return;
+      const field = box.getAttribute('data-field') || '';
+      if (!hasSavedOrDrawnActionSignature(field, row)) {
+        missing.push({
+          row: row,
+          box: box,
+          staffId: staffId,
+          staffName: (sel.options[sel.selectedIndex] && sel.options[sel.selectedIndex].text) || ''
+        });
+      }
+    });
+    return missing;
+  }
+
+  function updateSignatureHighlights(missing) {
+    document.querySelectorAll('.signature-box.sig-required').forEach(function (el) {
+      el.classList.remove('sig-required');
+    });
+    missing.forEach(function (item) {
+      if (item.box) item.box.classList.add('sig-required');
+    });
+  }
+
+  function updatePendingSignatureNotice() {
+    const pendingForUser = findMissingActionSignatures(true);
+    updateSignatureHighlights(pendingForUser);
+
+    let notice = document.getElementById('pendingSignatureNotice');
+    if (!notice) {
+      notice = document.createElement('div');
+      notice.id = 'pendingSignatureNotice';
+      notice.className = 'alert alert-warning pending-signature-notice mb-3';
+      const host = document.querySelector('.main-content .container-fluid') || document.querySelector('.main-content') || document.body;
+      host.insertBefore(notice, host.firstChild);
+    }
+
+    if (pendingForUser.length === 0) {
+      notice.style.display = 'none';
+      return;
+    }
+
+    notice.innerHTML = '<strong>Your signature is required.</strong> Please check the highlighted Action Staff signature field.';
+    notice.style.display = '';
+
+    if (!pendingToastShown) {
+      pendingToastShown = true;
+      const toast = document.createElement('div');
+      toast.className = 'alert alert-warning pending-signature-toast';
+      toast.innerHTML = '<strong>Notification:</strong><br>You have an ongoing request that requires your signature.';
+      document.body.appendChild(toast);
+    }
+  }
 
   function ensurePreviewIsImg(id) {
     const existing = document.getElementById(id);
@@ -148,6 +222,7 @@
         preview.src = dataURL;
         preview.style.display = 'block';
       }
+      updatePendingSignatureNotice();
       console.log('Signature saved to hidden for', currentField);
       return true;
     } catch (err) {
@@ -185,38 +260,11 @@
       const completed = document.getElementById('completed_checkbox');
 
       function findMissingSignatures() {
-        const rows = document.querySelectorAll('tr[data-action-row]');
-        const missing = [];
-        rows.forEach(function (row) {
-          const sel = row.querySelector('select[name="action_staff[]"]');
-          if (!sel) return;
-          const staffId = sel.value || '';
-          if (!staffId) return;
-          const idx = row.getAttribute('data-action-row');
-          const hid = document.getElementById('action_sig_' + idx + '_signature_data');
-          const existing = row.querySelector('input[name="action_existing_signature_path[]"]');
-          const hasNew = hid && hid.value && hid.value.trim() !== '';
-          const hasExisting = existing && existing.value && existing.value.trim() !== '';
-          if (!hasNew && !hasExisting) {
-            missing.push({
-              row: row,
-              staffId: staffId,
-              staffName: (sel.options[sel.selectedIndex] && sel.options[sel.selectedIndex].text) || ''
-            });
-          }
-        });
-        return missing;
+        return findMissingActionSignatures(false);
       }
 
       function updateHighlights(missing) {
-        document.querySelectorAll('.signature-box.sig-required').forEach(function (el) {
-          el.classList.remove('sig-required');
-        });
-        if (!missing || missing.length === 0) return;
-        missing.forEach(function (item) {
-          const box = item.row.querySelector('.signature-box');
-          if (box) box.classList.add('sig-required');
-        });
+        updateSignatureHighlights(missing || []);
       }
 
       function validateCompletedUI(showAlert) {
@@ -273,6 +321,7 @@
               }
             }
           }
+          updatePendingSignatureNotice();
           validateCompletedUI(false);
         }
       });
@@ -343,9 +392,41 @@
       addBtn.addEventListener('click', function () {
         const row = createRow(nextIndex++);
         tbody.appendChild(row);
+        updatePendingSignatureNotice();
       });
     }
   })();
+
+  const actionsTbody = document.getElementById('actions_tbody');
+  if (actionsTbody) {
+    actionsTbody.addEventListener('change', function (ev) {
+      const sel = ev.target.closest && ev.target.closest('select[name="action_staff[]"]');
+      if (!sel) return;
+      const row = sel.closest && sel.closest('tr[data-action-row]');
+      if (!row) return;
+      const box = row.querySelector('.signature-box');
+      const previousStaffId = box ? (box.getAttribute('data-staff-id') || '') : '';
+      if (box) box.setAttribute('data-staff-id', sel.value || '');
+      if (previousStaffId && previousStaffId !== (sel.value || '')) {
+        const hiddenSig = row.querySelector('input[name="action_signature_data[]"]');
+        const existingSig = row.querySelector('input[name="action_existing_signature_path[]"]');
+        const preview = row.querySelector('[id^="action_sig_"][id$="_preview"]');
+        if (hiddenSig) hiddenSig.value = '';
+        if (existingSig) existingSig.value = '';
+        if (preview) {
+          if (preview.tagName && preview.tagName.toLowerCase() === 'img') {
+            const blank = document.createElement('div');
+            blank.id = preview.id;
+            blank.style.cssText = 'width:100%; height:100%;';
+            preview.replaceWith(blank);
+          } else {
+            preview.innerHTML = '';
+          }
+        }
+      }
+      updatePendingSignatureNotice();
+    });
+  }
 
   try {
     resizeCanvas();
@@ -353,4 +434,5 @@
   } catch (e) {
     console.warn('initial signature pad setup failed', e);
   }
+  updatePendingSignatureNotice();
 })();

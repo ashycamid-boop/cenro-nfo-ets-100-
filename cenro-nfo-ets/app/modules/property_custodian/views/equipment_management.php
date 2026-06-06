@@ -766,6 +766,29 @@ require_once __DIR__ . '/../../../helpers/qr_url.php';
             </div>
           </div>
 
+          <h6 class="section-title">Actual User History</h6>
+          <div class="actual-user-history mb-3">
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th>Date Assigned</th>
+                    <th>Date Moved</th>
+                    <th>Previous User</th>
+                    <th>New User</th>
+                    <th>Status</th>
+                    <th>Changed By</th>
+                  </tr>
+                </thead>
+                <tbody id="actualUserHistoryTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">Loading history...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <!-- Remarks -->
           <h6 class="section-title">Remarks</h6>
           <div class="row">
@@ -869,6 +892,6 @@ require_once __DIR__ . '/../../../helpers/qr_url.php';
   </script>
   
   <!-- Equipment Management JavaScript -->
-  <script src="../../../../public/assets/js/property_custodian/equipment_management.js?v=20260518-admin-sync"></script>
+  <script src="../../../../public/assets/js/property_custodian/equipment_management.js?v=20260606-actual-user-history-fields"></script>
 </body>
 </html>

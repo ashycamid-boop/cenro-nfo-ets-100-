@@ -130,8 +130,12 @@
           }
           $selected_auth1_user_id = '';
           $selected_auth2_user_id = '';
+          $fixed_auth2_user = null;
           foreach ($auth_users as $au) {
             $auName = trim((string)($au['full_name'] ?? ''));
+            if ($fixed_auth2_user === null && stripos($auName, 'joan') !== false && stripos($auName, 'jumawid') !== false) {
+              $fixed_auth2_user = $au;
+            }
             if ($selected_auth1_user_id === '' && $auName !== '' && strcasecmp($auName, trim((string)$auth1_name)) === 0) {
               $selected_auth1_user_id = (string)$au['id'];
             }
@@ -142,6 +146,15 @@
           if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['save_changes'])) {
             $selected_auth1_user_id = isset($_POST['auth1_user_id']) ? (string)$_POST['auth1_user_id'] : $selected_auth1_user_id;
             $selected_auth2_user_id = isset($_POST['auth2_user_id']) ? (string)$_POST['auth2_user_id'] : $selected_auth2_user_id;
+          }
+          if ($fixed_auth2_user !== null) {
+            $selected_auth2_user_id = (string)$fixed_auth2_user['id'];
+            $auth2_name = $fixed_auth2_user['full_name'];
+            if ($auth2_position === '') {
+              $auth2_position = 'ICT Focal';
+            }
+          } elseif (trim((string)$auth2_name) === '') {
+            $auth2_name = 'Joan P. Jumawid';
           }
 
           // Signature URLs (saved as public/uploads/... in DB)
@@ -375,7 +388,7 @@
                 <tr>
                   <td style="border-right: 1px solid black; padding: 4px; font-weight: bold; width: 15%; font-size: 9px;">Full Name:</td>
                   <td style="border-right: 1px solid black; padding: 2px; width: 35%;">
-                    <?php $auth1_input_style = ($approval_blocked && $missing_auth1) ? 'width:100%; font-size:9px; padding:2px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:9px; padding:2px;'; ?>
+                    <?php $auth1_input_style = ($approval_blocked && $missing_auth1) ? 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:12px; padding:4px;'; ?>
                     <select name="auth1_user_id" class="form-select form-select-sm" style="<?php echo $auth1_input_style; ?>">
                       <option value="">-- Select user --</option>
                       <?php foreach ($auth_users as $au): ?>
@@ -385,7 +398,7 @@
                   </td>
                   <td style="border-right: 1px solid black; padding: 4px; font-weight: bold; width: 20%; font-size: 9px;">Title/Position:</td>
                   <td style="padding: 2px; width: 30%;">
-                    <?php $auth1_pos_style = ($approval_blocked && $missing_auth1) ? 'width:100%; font-size:9px; padding:2px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:9px; padding:2px;'; ?>
+                    <?php $auth1_pos_style = ($approval_blocked && $missing_auth1) ? 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:12px; padding:4px;'; ?>
                     <input type="text" name="auth1_position" value="<?php echo htmlspecialchars($auth1_position); ?>" style="<?php echo $auth1_pos_style; ?>" />
                   </td>
                 </tr>
@@ -414,7 +427,8 @@
                   <td style="width: 50%; padding: 4px;">
                     <?php $auth1_date_div_style = ($approval_blocked && $missing_auth1) ? 'border:1px solid #d9534f; text-align:center; height:50px; display:flex; align-items:center; justify-content:center; padding:2px; background:#fff;' : 'border: 1px solid black; text-align: center; height: 50px; display: flex; align-items: center; justify-content: center; padding: 2px;'; ?>
                     <div style="<?php echo $auth1_date_div_style; ?>">
-                      <input type="date" name="auth1_date" value="<?php echo !empty($request['auth1_date']) ? htmlspecialchars($request['auth1_date']) : ''; ?>" style="border: none; font-size: 8px; text-align: center; width: 100%;" />
+                      <input type="hidden" name="auth1_date" value="<?php echo !empty($request['auth1_date']) ? htmlspecialchars($request['auth1_date']) : ''; ?>" />
+                      <div id="auth1_date_display" style="font-size: 12px; font-weight: 500; text-align: center; width: 100%;"><?php echo !empty($request['auth1_date']) ? htmlspecialchars($request['auth1_date']) : ''; ?></div>
                     </div>
                   </td>
                 </tr>
@@ -441,17 +455,13 @@
                 <tr>
                   <td style="border-right: 1px solid black; padding: 4px; font-weight: bold; width: 15%; font-size: 9px;">Full Name:</td>
                   <td style="border-right: 1px solid black; padding: 2px; width: 35%;">
-                    <?php $auth2_input_style = ($approval_blocked && $missing_auth2) ? 'width:100%; font-size:9px; padding:2px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:9px; padding:2px;'; ?>
-                    <select name="auth2_user_id" class="form-select form-select-sm" style="<?php echo $auth2_input_style; ?>">
-                      <option value="">-- Select user --</option>
-                      <?php foreach ($auth_users as $au): ?>
-                        <option value="<?php echo htmlspecialchars($au['id']); ?>" <?php echo ((string)$au['id'] === (string)$selected_auth2_user_id) ? 'selected' : ''; ?>><?php echo htmlspecialchars($au['full_name']); ?></option>
-                      <?php endforeach; ?>
-                    </select>
+                    <?php $auth2_input_style = ($approval_blocked && $missing_auth2) ? 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:12px; padding:4px;'; ?>
+                    <input type="hidden" name="auth2_user_id" value="<?php echo htmlspecialchars($selected_auth2_user_id); ?>">
+                    <div style="<?php echo $auth2_input_style; ?>"><?php echo htmlspecialchars($auth2_name); ?></div>
                   </td>
                   <td style="border-right: 1px solid black; padding: 4px; font-weight: bold; width: 20%; font-size: 9px;">Title/Position:</td>
                   <td style="padding: 2px; width: 30%;">
-                    <?php $auth2_pos_style = ($approval_blocked && $missing_auth2) ? 'width:100%; font-size:9px; padding:2px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:9px; padding:2px;'; ?>
+                    <?php $auth2_pos_style = ($approval_blocked && $missing_auth2) ? 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background-color:#fff;' : 'width:100%; border: none; font-size:12px; padding:4px;'; ?>
                     <input type="text" name="auth2_position" value="<?php echo htmlspecialchars($auth2_position); ?>" style="<?php echo $auth2_pos_style; ?>" />
                   </td>
                 </tr>
@@ -480,7 +490,8 @@
                   <td style="width: 50%; padding: 4px;">
                     <?php $auth2_date_div_style = ($approval_blocked && $missing_auth2) ? 'border:1px solid #d9534f; text-align:center; height:50px; display:flex; align-items:center; justify-content:center; padding:2px; background:#fff;' : 'border: 1px solid black; text-align: center; height: 50px; display: flex; align-items: center; justify-content: center; padding: 2px;'; ?>
                     <div style="<?php echo $auth2_date_div_style; ?>">
-                      <input type="date" name="auth2_date" value="<?php echo !empty($request['auth2_date']) ? htmlspecialchars($request['auth2_date']) : ''; ?>" style="border: none; font-size: 8px; text-align: center; width: 100%;" placeholder="Date" />
+                      <input type="hidden" name="auth2_date" value="<?php echo !empty($request['auth2_date']) ? htmlspecialchars($request['auth2_date']) : ''; ?>" />
+                      <div id="auth2_date_display" style="font-size: 12px; font-weight: 500; text-align: center; width: 100%;"><?php echo !empty($request['auth2_date']) ? htmlspecialchars($request['auth2_date']) : ''; ?></div>
                     </div>
                   </td>
                 </tr>
@@ -502,6 +513,18 @@
               $staff_users = [];
               error_log('fetch staff users error: ' . $e->getMessage());
             }
+
+            function render_action_staff_options(array $staff_users, $selected_staff_id, int $row_number, $session_user_id): void {
+              echo '<option value="">-- Select staff --</option>';
+              foreach ($staff_users as $su) {
+                $staffId = (string)($su['id'] ?? '');
+                if ($row_number === 1 && $session_user_id !== null && $staffId === (string)$session_user_id) {
+                  continue;
+                }
+                $selected = ($staffId === (string)$selected_staff_id) ? ' selected' : '';
+                echo '<option value="' . htmlspecialchars($staffId, ENT_QUOTES, 'UTF-8') . '"' . $selected . '>' . htmlspecialchars($su['full_name'] ?? '', ENT_QUOTES, 'UTF-8') . '</option>';
+              }
+            }
             ?>
             <div style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
               <table style="width: 100%; border-collapse: collapse;">
@@ -520,24 +543,24 @@
                       <tr data-action-row="<?php echo $i; ?>">
                         <?php
                           $isFirst = ($i === 1);
-                          $ad_style = 'width: 100%; border: none; font-size: 8px; padding: 2px;';
-                          $at_style = 'width: 100%; border: none; font-size: 8px; padding: 2px;';
-                          $det_style = 'width: 100%; border: none; font-size: 8px; padding: 2px; height: 20px; resize: none;';
-                          $staff_style = 'width:100%; border:none; font-size:8px; padding:2px;';
+                          $ad_style = 'width: 100%; border: none; font-size: 12px; padding: 4px;';
+                          $at_style = 'width: 100%; border: none; font-size: 12px; padding: 4px;';
+                          $det_style = 'width: 100%; border: none; font-size: 12px; padding: 4px; height: 28px; resize: none;';
+                          $staff_style = 'width:100%; border:none; font-size:12px; padding:4px;';
                           $sig_box_style = 'border: 1px solid #000; height:40px; display:flex; align-items:center; justify-content:center; padding:4px; cursor:pointer;';
                           if ($isFirst && $approval_blocked && $missing_action) {
-                            if ($missing_action_date) $ad_style = 'width:100%; font-size:8px; padding:2px; border:1px solid #d9534f; background:#fff;';
-                            if ($missing_action_time) $at_style = 'width:100%; font-size:8px; padding:2px; border:1px solid #d9534f; background:#fff;';
-                            if ($missing_action_details) $det_style = 'width:100%; font-size:8px; padding:2px; height:20px; resize:none; border:1px solid #d9534f; background:#fff;';
-                            if ($missing_action_staff) $staff_style = 'width:100%; font-size:8px; padding:2px; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_date) $ad_style = 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_time) $at_style = 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_details) $det_style = 'width:100%; font-size:12px; padding:4px; height:28px; resize:none; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_staff) $staff_style = 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background:#fff;';
                           }
                           // Also highlight Action Details if request is pending and the first action details are missing
                           if ($isFirst && !empty($pending_missing_action_details)) {
-                            $det_style = 'width:100%; font-size:8px; padding:2px; height:20px; resize:none; border:1px solid #d9534f; background:#fff;';
+                            $det_style = 'width:100%; font-size:12px; padding:4px; height:28px; resize:none; border:1px solid #d9534f; background:#fff;';
                           }
                           // Also highlight Action Details if request is pending and the first action details are missing
                           if ($isFirst && !empty($pending_missing_action_details)) {
-                            $det_style = 'width:100%; font-size:8px; padding:2px; height:20px; resize:none; border:1px solid #d9534f; background:#fff;';
+                            $det_style = 'width:100%; font-size:12px; padding:4px; height:28px; resize:none; border:1px solid #d9534f; background:#fff;';
                           }
                         ?>
                         <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 2px; height: 25px;">
@@ -554,10 +577,7 @@
                         </td>
                         <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 2px;">
                           <select name="action_staff[]" class="form-select form-select-sm" style="<?php echo $staff_style; ?>">
-                            <option value="">-- Select staff --</option>
-                            <?php foreach ($staff_users as $su): ?>
-                              <option value="<?php echo htmlspecialchars($su['id']); ?>" <?php echo ($su['id'] == $act['action_staff_id']) ? 'selected' : ''; ?>><?php echo htmlspecialchars($su['full_name']); ?></option>
-                            <?php endforeach; ?>
+                            <?php render_action_staff_options($staff_users, $act['action_staff_id'] ?? '', $i, $sessionUserId); ?>
                           </select>
                         </td>
                         <td style="border-bottom: 1px solid black; padding: 2px;">
@@ -582,16 +602,16 @@
                       <tr data-action-row="<?php echo $i; ?>">
                         <?php
                           $isFirst = ($i === 1);
-                          $ad_style = 'width: 100%; border: none; font-size: 8px; padding: 2px;';
-                          $at_style = 'width: 100%; border: none; font-size: 8px; padding: 2px;';
-                          $det_style = 'width: 100%; border: none; font-size: 8px; padding: 2px; height: 20px; resize: none;';
-                          $staff_style = 'width:100%; border:none; font-size:8px; padding:2px;';
+                          $ad_style = 'width: 100%; border: none; font-size: 12px; padding: 4px;';
+                          $at_style = 'width: 100%; border: none; font-size: 12px; padding: 4px;';
+                          $det_style = 'width: 100%; border: none; font-size: 12px; padding: 4px; height: 28px; resize: none;';
+                          $staff_style = 'width:100%; border:none; font-size:12px; padding:4px;';
                           $sig_box_style = 'border: 1px solid #000; height:40px; display:flex; align-items:center; justify-content:center; padding:4px; cursor:pointer;';
                           if ($isFirst && $approval_blocked && $missing_action) {
-                            if ($missing_action_date) $ad_style = 'width:100%; font-size:8px; padding:2px; border:1px solid #d9534f; background:#fff;';
-                            if ($missing_action_time) $at_style = 'width:100%; font-size:8px; padding:2px; border:1px solid #d9534f; background:#fff;';
-                            if ($missing_action_details) $det_style = 'width:100%; font-size:8px; padding:2px; height:20px; resize:none; border:1px solid #d9534f; background:#fff;';
-                            if ($missing_action_staff) $staff_style = 'width:100%; font-size:8px; padding:2px; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_date) $ad_style = 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_time) $at_style = 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_details) $det_style = 'width:100%; font-size:12px; padding:4px; height:28px; resize:none; border:1px solid #d9534f; background:#fff;';
+                            if ($missing_action_staff) $staff_style = 'width:100%; font-size:12px; padding:4px; border:1px solid #d9534f; background:#fff;';
                           }
                         ?>
                         <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 2px; height: 25px;">
@@ -608,10 +628,7 @@
                         </td>
                         <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 2px;">
                           <select name="action_staff[]" class="form-select form-select-sm" style="<?php echo $staff_style; ?>">
-                            <option value="">-- Select staff --</option>
-                            <?php foreach ($staff_users as $su): ?>
-                              <option value="<?php echo htmlspecialchars($su['id']); ?>"><?php echo htmlspecialchars($su['full_name']); ?></option>
-                            <?php endforeach; ?>
+                            <?php render_action_staff_options($staff_users, '', $i, $sessionUserId); ?>
                           </select>
                         </td>
                         <td style="border-bottom: 1px solid black; padding: 2px;">
@@ -744,7 +761,7 @@
     <?php endforeach; ?>
   </template>
 
-  <script src="../../../../public/assets/js/admin/edit_requests.js?v=20260517-action-staff-sign"></script>
+  <script src="../../../../public/assets/js/admin/edit_requests.js?v=20260606-pending-signature-english"></script>
 
 </body>
 </html>

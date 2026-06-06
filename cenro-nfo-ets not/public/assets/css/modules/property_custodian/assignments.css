@@ -1,0 +1,244 @@
+.qr-code-image {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+    /* compact table: smaller font and reduced row padding */
+    #assignmentsTable, #assignmentsTable th, #assignmentsTable td {
+      font-size: 13px;
+    }
+    #assignmentsTable thead th {
+      font-size: 12px;
+      padding: .35rem .5rem;
+    }
+    #assignmentsTable tbody td {
+      padding: .35rem .5rem;
+      vertical-align: middle;
+    }
+    #assignmentsTable tbody tr {
+      height: 40px; /* visual row height; browsers may vary */
+    }
+
+@media (max-width: 575.98px) {
+  .property-custodian-assignments-page .assignments-desktop-controls,
+  .property-custodian-assignments-page .top-action-bar {
+    display: none !important;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-toolbar {
+    display: block !important;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-toolbar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-search .form-control {
+    min-height: 52px;
+    border-radius: 18px;
+    border: 1px solid #d6dfeb;
+    padding: 0.95rem 1rem;
+    font-size: 1rem;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    border-radius: 18px;
+    border: 1px solid #d6dfeb;
+    background: #fff;
+    color: #1f2937;
+    font-weight: 600;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0.9rem;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-actions .btn {
+    min-height: 48px;
+    border-radius: 16px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+
+  .property-custodian-assignments-page .assignments-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #174ea6;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .property-custodian-assignments-page .assignments-table-section {
+    border-radius: 14px;
+  }
+
+  .property-custodian-assignments-page .table-responsive {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .property-custodian-assignments-page #assignmentsTable {
+    min-width: 1100px !important;
+    table-layout: auto;
+  }
+
+  .property-custodian-assignments-page .table thead {
+    display: table-header-group !important;
+  }
+
+  .property-custodian-assignments-page .table,
+  .property-custodian-assignments-page .table tbody,
+  .property-custodian-assignments-page .table td,
+  .property-custodian-assignments-page .table th {
+    display: revert !important;
+    width: auto !important;
+  }
+
+  .property-custodian-assignments-page .table tbody {
+    padding: 0 !important;
+  }
+
+  .property-custodian-assignments-page .table tr {
+    display: table-row !important;
+    width: auto !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .property-custodian-assignments-page .table tbody tr[style*="display: none"] {
+    display: none !important;
+  }
+
+  .property-custodian-assignments-page .table tbody tr:not([style*="display: none"]) {
+    display: table-row !important;
+  }
+
+  .property-custodian-assignments-page .table tbody td::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  .property-custodian-assignments-page .table thead th,
+  .property-custodian-assignments-page .table tbody td {
+    padding: 0.7rem 0.75rem !important;
+    font-size: 0.78rem !important;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .property-custodian-assignments-page .table tbody td[data-label="Full Name"] img {
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 0.45rem !important;
+  }
+
+  .property-custodian-assignments-page .qr-code-image {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .property-custodian-assignments-page .actions-cell,
+  .property-custodian-assignments-page .action-group {
+    display: block !important;
+    white-space: nowrap;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1600;
+    display: none;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-modal.is-open {
+    display: block;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.48);
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    padding: 0.75rem 1rem 1rem;
+    box-shadow: 0 -16px 40px rgba(15, 23, 42, 0.18);
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-handle {
+    width: 48px;
+    height: 5px;
+    border-radius: 999px;
+    background: #cbd5e1;
+    margin: 0 auto 0.9rem;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-body .form-control,
+  .property-custodian-assignments-page .assignments-mobile-filter-body .form-select {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .property-custodian-assignments-page .assignments-mobile-filter-footer .btn {
+    min-height: 46px;
+    border-radius: 14px;
+  }
+}

@@ -10,18 +10,36 @@ try {
 
   $from = isset($_GET['from']) ? trim((string)$_GET['from']) : '';
   $to = isset($_GET['to']) ? trim((string)$_GET['to']) : '';
+  $granularity = isset($_GET['granularity']) ? trim((string)$_GET['granularity']) : 'monthly';
+  if (!in_array($granularity, ['daily', 'weekly', 'monthly', 'quarterly', 'yearly'], true)) {
+    $granularity = 'monthly';
+  }
   $monthPattern = '/^\d{4}-(0[1-9]|1[0-2])$/';
+  $datePattern = '/^\d{4}-(0[1-9]|1[0-2])-\d{2}$/';
+  $hasExplicitRange = ($from !== '' || $to !== '');
+  $fromDate = null;
+  $toDate = null;
 
   // Fallback for callers without an explicit range:
   // 1. honor an older `months` parameter when present
   // 2. otherwise load all available records by default
-  if ($from === '' || $to === '' || !preg_match($monthPattern, $from) || !preg_match($monthPattern, $to)) {
+  if ($from !== '' && $to !== '' && preg_match($datePattern, $from) && preg_match($datePattern, $to)) {
+    $fromDate = DateTimeImmutable::createFromFormat('!Y-m-d', $from);
+    $toDate = DateTimeImmutable::createFromFormat('!Y-m-d', $to);
+  } elseif ($from !== '' && $to !== '' && preg_match($monthPattern, $from) && preg_match($monthPattern, $to)) {
+    $fromMonth = DateTimeImmutable::createFromFormat('!Y-m', $from);
+    $toMonth = DateTimeImmutable::createFromFormat('!Y-m', $to);
+    $fromDate = $fromMonth ? $fromMonth : null;
+    $toDate = $toMonth ? $toMonth->modify('last day of this month') : null;
+  } elseif ($hasExplicitRange) {
+    throw new Exception('Invalid date range format');
+  } else {
     $monthsParam = isset($_GET['months']) ? (int)$_GET['months'] : 0;
     if ($monthsParam > 0) {
       $months = min($monthsParam, 240);
       $startTs = strtotime(date('Y-m-01') . ' -' . ($months - 1) . ' months');
-      $from = date('Y-m', $startTs);
-      $to = date('Y-m');
+      $fromDate = new DateTimeImmutable(date('Y-m-01', $startTs));
+      $toDate = (new DateTimeImmutable('today'))->modify('last day of this month');
     } else {
       $minDates = [];
 
@@ -40,30 +58,59 @@ try {
 
       if (!empty($minDates)) {
         sort($minDates);
-        $from = date('Y-m', strtotime((string)$minDates[0]));
+        $fromDate = new DateTimeImmutable(date('Y-m-d', strtotime((string)$minDates[0])));
       } else {
-        $from = date('Y-m');
+        $fromDate = new DateTimeImmutable('today');
       }
 
-      $to = date('Y-m');
+      $toDate = new DateTimeImmutable('today');
     }
   }
 
-  $fromMonth = DateTimeImmutable::createFromFormat('!Y-m', $from);
-  $toMonth = DateTimeImmutable::createFromFormat('!Y-m', $to);
-  if (!$fromMonth || !$toMonth) throw new Exception('Invalid date range format');
-  if ($fromMonth > $toMonth) throw new Exception('From month cannot be later than To month');
+  if (!$fromDate || !$toDate) throw new Exception('Invalid date range format');
+  if ($fromDate > $toDate) throw new Exception('From date cannot be later than To date');
 
+  $periodGranularity = in_array($granularity, ['daily', 'weekly'], true) ? $granularity : 'monthly';
   $labels = [];
-  $cursor = $fromMonth;
-  while ($cursor <= $toMonth) {
-    $labels[] = $cursor->format('Y-m');
-    $cursor = $cursor->modify('+1 month');
+  if ($periodGranularity === 'daily') {
+    $cursor = $fromDate;
+    while ($cursor <= $toDate) {
+      $labels[] = $cursor->format('Y-m-d');
+      $cursor = $cursor->modify('+1 day');
+    }
+  } elseif ($periodGranularity === 'weekly') {
+    $cursor = $fromDate->modify('monday this week');
+    while ($cursor <= $toDate) {
+      $labels[] = $cursor->format('Y-m-d');
+      $cursor = $cursor->modify('+1 week');
+    }
+  } else {
+    $cursor = $fromDate->modify('first day of this month');
+    $lastMonth = $toDate->modify('first day of this month');
+    while ($cursor <= $lastMonth) {
+      $labels[] = $cursor->format('Y-m');
+      $cursor = $cursor->modify('+1 month');
+    }
   }
-  if (count($labels) > 240) throw new Exception('Date range too large. Maximum is 240 months.');
+  $maxLabels = $periodGranularity === 'daily' ? 800 : ($periodGranularity === 'weekly' ? 260 : 240);
+  if (count($labels) > $maxLabels) throw new Exception('Date range too large for the selected granularity.');
 
-  $startDate = $fromMonth->format('Y-m-01 00:00:00');
-  $endDateExclusive = $toMonth->modify('+1 month')->format('Y-m-01 00:00:00');
+  $startDate = $fromDate->format('Y-m-d 00:00:00');
+  $endDateExclusive = $toDate->modify('+1 day')->format('Y-m-d 00:00:00');
+
+  $periodExpr = function(string $column) use ($periodGranularity): string {
+    if ($periodGranularity === 'daily') {
+      return "DATE_FORMAT({$column}, '%Y-%m-%d')";
+    }
+    if ($periodGranularity === 'weekly') {
+      return "DATE_FORMAT(DATE_SUB(DATE({$column}), INTERVAL WEEKDAY({$column}) DAY), '%Y-%m-%d')";
+    }
+    return "DATE_FORMAT({$column}, '%Y-%m')";
+  };
+  $spotPeriod = $periodExpr('COALESCE(incident_datetime, created_at)');
+  $reportPeriod = $periodExpr('COALESCE(r.incident_datetime, r.created_at)');
+  $servicePeriod = $periodExpr('created_at');
+  $equipmentPeriod = $periodExpr('created_at');
 
   // Session may hold current user id/email; attempt to load it for per-user counts
   if (session_status() === PHP_SESSION_NONE) {
@@ -81,30 +128,30 @@ try {
     return $out;
   };
 
-  // Spot reports time series (by incident month; fallback to created_at)
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(COALESCE(incident_datetime, created_at), '%Y-%m') AS ym, COUNT(*) AS cnt FROM spot_reports WHERE COALESCE(incident_datetime, created_at) >= ? AND COALESCE(incident_datetime, created_at) < ? GROUP BY ym ORDER BY ym ASC");
+  // Spot reports time series (by selected period; incident date falls back to created_at)
+  $stmt = $pdo->prepare("SELECT {$spotPeriod} AS ym, COUNT(*) AS cnt FROM spot_reports WHERE COALESCE(incident_datetime, created_at) >= ? AND COALESCE(incident_datetime, created_at) < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $spotRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $spotSeries = $fill($spotRows);
 
   // Cases (approved spot_reports) - exclude reports whose case_status is 'resolved' (closed)
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(COALESCE(incident_datetime, created_at), '%Y-%m') AS ym, COUNT(*) AS cnt FROM spot_reports WHERE LOWER(TRIM(COALESCE(status,''))) = 'approved' AND LOWER(TRIM(COALESCE(case_status,''))) != 'resolved' AND COALESCE(incident_datetime, created_at) >= ? AND COALESCE(incident_datetime, created_at) < ? GROUP BY ym ORDER BY ym ASC");
+  $stmt = $pdo->prepare("SELECT {$spotPeriod} AS ym, COUNT(*) AS cnt FROM spot_reports WHERE LOWER(TRIM(COALESCE(status,''))) = 'approved' AND LOWER(TRIM(COALESCE(case_status,''))) != 'resolved' AND COALESCE(incident_datetime, created_at) >= ? AND COALESCE(incident_datetime, created_at) < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $caseRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $caseSeries = $fill($caseRows);
 
   // Apprehended: persons/vehicles/items (counted by parent report created_at for approved reports)
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(COALESCE(r.incident_datetime, r.created_at), '%Y-%m') AS ym, COUNT(*) AS cnt FROM spot_report_persons p JOIN spot_reports r ON r.id = p.report_id WHERE LOWER(TRIM(COALESCE(r.status,''))) = 'approved' AND COALESCE(r.incident_datetime, r.created_at) >= ? AND COALESCE(r.incident_datetime, r.created_at) < ? GROUP BY ym ORDER BY ym ASC");
+  $stmt = $pdo->prepare("SELECT {$reportPeriod} AS ym, COUNT(*) AS cnt FROM spot_report_persons p JOIN spot_reports r ON r.id = p.report_id WHERE LOWER(TRIM(COALESCE(r.status,''))) = 'approved' AND COALESCE(r.incident_datetime, r.created_at) >= ? AND COALESCE(r.incident_datetime, r.created_at) < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $personRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $personsSeries = $fill($personRows);
 
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(COALESCE(r.incident_datetime, r.created_at), '%Y-%m') AS ym, COUNT(*) AS cnt FROM spot_report_vehicles v JOIN spot_reports r ON r.id = v.report_id WHERE LOWER(TRIM(COALESCE(r.status,''))) = 'approved' AND COALESCE(r.incident_datetime, r.created_at) >= ? AND COALESCE(r.incident_datetime, r.created_at) < ? GROUP BY ym ORDER BY ym ASC");
+  $stmt = $pdo->prepare("SELECT {$reportPeriod} AS ym, COUNT(*) AS cnt FROM spot_report_vehicles v JOIN spot_reports r ON r.id = v.report_id WHERE LOWER(TRIM(COALESCE(r.status,''))) = 'approved' AND COALESCE(r.incident_datetime, r.created_at) >= ? AND COALESCE(r.incident_datetime, r.created_at) < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $vehRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $vehiclesSeries = $fill($vehRows);
 
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(COALESCE(r.incident_datetime, r.created_at), '%Y-%m') AS ym, COUNT(*) AS cnt FROM spot_report_items i JOIN spot_reports r ON r.id = i.report_id WHERE LOWER(TRIM(COALESCE(r.status,''))) = 'approved' AND COALESCE(r.incident_datetime, r.created_at) >= ? AND COALESCE(r.incident_datetime, r.created_at) < ? GROUP BY ym ORDER BY ym ASC");
+  $stmt = $pdo->prepare("SELECT {$reportPeriod} AS ym, COUNT(*) AS cnt FROM spot_report_items i JOIN spot_reports r ON r.id = i.report_id WHERE LOWER(TRIM(COALESCE(r.status,''))) = 'approved' AND COALESCE(r.incident_datetime, r.created_at) >= ? AND COALESCE(r.incident_datetime, r.created_at) < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $itemRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $itemsSeries = $fill($itemRows);
@@ -159,7 +206,7 @@ try {
   foreach ($rows as $r) { $k = $r['status'] !== '' ? $r['status'] : 'unknown'; $caseBy[$k] = (int)$r['cnt']; }
 
   // Service requests by status
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(created_at, '%Y-%m') AS ym, COUNT(*) AS cnt FROM service_requests WHERE created_at >= ? AND created_at < ? GROUP BY ym ORDER BY ym ASC");
+  $stmt = $pdo->prepare("SELECT {$servicePeriod} AS ym, COUNT(*) AS cnt FROM service_requests WHERE created_at >= ? AND created_at < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $svcRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $svcSeries = $fill($svcRows);
@@ -194,7 +241,7 @@ try {
   foreach ($rows as $r) { $svcTypes[] = ['label'=>$r['type'],'count'=>(int)$r['cnt']]; }
 
   // Equipment by month/status/type
-  $stmt = $pdo->prepare("SELECT DATE_FORMAT(created_at, '%Y-%m') AS ym, COUNT(*) AS cnt FROM equipment WHERE created_at >= ? AND created_at < ? GROUP BY ym ORDER BY ym ASC");
+  $stmt = $pdo->prepare("SELECT {$equipmentPeriod} AS ym, COUNT(*) AS cnt FROM equipment WHERE created_at >= ? AND created_at < ? GROUP BY ym ORDER BY ym ASC");
   $stmt->execute([$startDate, $endDateExclusive]);
   $equipmentRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $equipmentSeries = $fill($equipmentRows);

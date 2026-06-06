@@ -102,7 +102,7 @@
           datasets: [{
             label: 'Equipment',
             data: [0, 0, 0, 0, 0, 0, 0],
-            backgroundColor: ['#28a745', '#ffc107', '#0dcaf0', '#17a2b8', '#6f42c1', '#dc3545', '#6c757d']
+            backgroundColor: ['#198754', '#0d6efd', '#0dcaf0', '#ffc107', '#6f42c1', '#dc3545', '#6c757d']
           }]
         },
         options: {

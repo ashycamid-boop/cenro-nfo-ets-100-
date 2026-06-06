@@ -52,6 +52,17 @@ const EquipmentService = {
         }
     },
 
+    // Get actual user assignment history for equipment
+    async getActualUserHistory(id) {
+        try {
+            const response = await fetch(`${this.apiUrl}?action=getActualUserHistory&id=${encodeURIComponent(id)}`, { credentials: 'same-origin' });
+            return await this._safeParseResponse(response);
+        } catch (error) {
+            console.error('Error fetching actual user history:', error);
+            return { error: error.message || 'Network error' };
+        }
+    },
+
     // Get all users
     async getUsers() {
         try {

@@ -50,6 +50,184 @@ function requires_actual_user($status) {
     return normalize_status_value($status) === 'In Use';
 }
 
+function ensure_equipment_actual_user_history_table(PDO $pdo) {
+    static $checked = false;
+    if ($checked) return;
+    $checked = true;
+
+    try {
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS equipment_actual_user_history (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                equipment_id INT NOT NULL,
+                previous_actual_user VARCHAR(255) NULL,
+                new_actual_user VARCHAR(255) NULL,
+                date_assigned DATETIME NULL,
+                date_moved DATETIME NULL,
+                status VARCHAR(100) NULL,
+                changed_by INT NULL,
+                changed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                INDEX idx_equipment_actual_user_history_equipment_id (equipment_id),
+                INDEX idx_equipment_actual_user_history_changed_by (changed_by)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        ");
+        $columns = [];
+        $stmt = $pdo->query("SHOW COLUMNS FROM equipment_actual_user_history");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $columns[$row['Field']] = true;
+        }
+        if (!isset($columns['date_assigned'])) {
+            $pdo->exec("ALTER TABLE equipment_actual_user_history ADD COLUMN date_assigned DATETIME NULL AFTER new_actual_user");
+        }
+        if (!isset($columns['date_moved'])) {
+            $pdo->exec("ALTER TABLE equipment_actual_user_history ADD COLUMN date_moved DATETIME NULL AFTER date_assigned");
+        }
+        if (!isset($columns['status'])) {
+            $pdo->exec("ALTER TABLE equipment_actual_user_history ADD COLUMN status VARCHAR(100) NULL AFTER date_moved");
+        }
+    } catch (Exception $e) {
+        error_log('ensure equipment actual user history table failed: ' . $e->getMessage());
+    }
+}
+
+function normalize_history_user_value($value) {
+    $value = trim((string)($value ?? ''));
+    return $value === '' ? null : $value;
+}
+
+function log_actual_user_history(PDO $pdo, $equipmentId, $previousActualUser, $newActualUser, $status = null) {
+    $equipmentId = (int)$equipmentId;
+    if ($equipmentId <= 0) return;
+
+    $previousActualUser = normalize_history_user_value($previousActualUser);
+    $newActualUser = normalize_history_user_value($newActualUser);
+    if ((string)$previousActualUser === (string)$newActualUser) return;
+    $status = normalize_history_user_value($status);
+    $dateAssigned = ($previousActualUser === null && $newActualUser !== null) ? date('Y-m-d H:i:s') : null;
+    $dateMoved = ($previousActualUser !== null) ? date('Y-m-d H:i:s') : null;
+
+    try {
+        ensure_equipment_actual_user_history_table($pdo);
+        $changedBy = isset($_SESSION['uid']) ? (int)$_SESSION['uid'] : null;
+        $stmt = $pdo->prepare("
+            INSERT INTO equipment_actual_user_history
+                (equipment_id, previous_actual_user, new_actual_user, date_assigned, date_moved, status, changed_by)
+            VALUES
+                (:equipment_id, :previous_actual_user, :new_actual_user, :date_assigned, :date_moved, :status, :changed_by)
+        ");
+        $stmt->bindValue(':equipment_id', $equipmentId, PDO::PARAM_INT);
+        $stmt->bindValue(':previous_actual_user', $previousActualUser);
+        $stmt->bindValue(':new_actual_user', $newActualUser);
+        $stmt->bindValue(':date_assigned', $dateAssigned);
+        $stmt->bindValue(':date_moved', $dateMoved);
+        $stmt->bindValue(':status', $status);
+        if ($changedBy) {
+            $stmt->bindValue(':changed_by', $changedBy, PDO::PARAM_INT);
+        } else {
+            $stmt->bindValue(':changed_by', null, PDO::PARAM_NULL);
+        }
+        $stmt->execute();
+    } catch (Exception $e) {
+        error_log('log equipment actual user history failed: ' . $e->getMessage());
+    }
+}
+
+function resolve_user_display_names(PDO $pdo, array $values) {
+    $ids = [];
+    foreach ($values as $value) {
+        if ($value !== null && $value !== '' && is_numeric($value)) {
+            $ids[] = (int)$value;
+        }
+    }
+
+    $map = [];
+    if (!count($ids)) return $map;
+
+    try {
+        $ids = array_values(array_unique($ids));
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $stmt = $pdo->prepare("SELECT id, full_name FROM users WHERE id IN ($placeholders)");
+        foreach ($ids as $i => $id) $stmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $user) {
+            $map[(string)(int)$user['id']] = $user['full_name'];
+        }
+    } catch (Exception $e) {
+        error_log('resolve user display names failed: ' . $e->getMessage());
+    }
+
+    return $map;
+}
+
+// Improved history logger which closes any existing open assignment
+function log_actual_user_history_v2(PDO $pdo, $equipmentId, $previousActualUser, $newActualUser, $status = null) {
+    $equipmentId = (int)$equipmentId;
+    if ($equipmentId <= 0) return;
+
+    $previousActualUser = normalize_history_user_value($previousActualUser);
+    $newActualUser = normalize_history_user_value($newActualUser);
+    if ((string)$previousActualUser === (string)$newActualUser) return;
+    $status = normalize_history_user_value($status);
+    $now = date('Y-m-d H:i:s');
+
+    try {
+        ensure_equipment_actual_user_history_table($pdo);
+        $changedBy = isset($_SESSION['uid']) ? (int)$_SESSION['uid'] : null;
+
+        try {
+            $pdo->beginTransaction();
+
+            // Close any open assignment rows for this equipment
+            $closeStmt = $pdo->prepare("UPDATE equipment_actual_user_history
+                SET date_moved = :date_moved,
+                    status = :transferred
+                WHERE equipment_id = :equipment_id
+                  AND date_moved IS NULL
+                  AND new_actual_user IS NOT NULL");
+            $transferredLabel = 'Transferred';
+            $closeStmt->bindValue(':date_moved', $now);
+            $closeStmt->bindValue(':transferred', $transferredLabel);
+            $closeStmt->bindValue(':equipment_id', $equipmentId, PDO::PARAM_INT);
+            $closeStmt->execute();
+
+            // Only insert a new history record when there is a new actual user.
+            // For unassignment (newActualUser === null) we only close the previous row.
+            if ($newActualUser !== null) {
+                $dateAssigned = $now;
+                $stmt = $pdo->prepare("INSERT INTO equipment_actual_user_history
+                    (equipment_id, previous_actual_user, new_actual_user, date_assigned, date_moved, status, changed_by)
+                    VALUES
+                    (:equipment_id, :previous_actual_user, :new_actual_user, :date_assigned, :date_moved, :status, :changed_by)");
+                $stmt->bindValue(':equipment_id', $equipmentId, PDO::PARAM_INT);
+                $stmt->bindValue(':previous_actual_user', $previousActualUser);
+                $stmt->bindValue(':new_actual_user', $newActualUser);
+                $stmt->bindValue(':date_assigned', $dateAssigned);
+                $stmt->bindValue(':date_moved', null, PDO::PARAM_NULL);
+                $stmt->bindValue(':status', $status);
+                if ($changedBy) {
+                    $stmt->bindValue(':changed_by', $changedBy, PDO::PARAM_INT);
+                } else {
+                    $stmt->bindValue(':changed_by', null, PDO::PARAM_NULL);
+                }
+                $stmt->execute();
+            }
+
+            $pdo->commit();
+        } catch (Exception $e) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            throw $e;
+        }
+    } catch (Exception $e) {
+        error_log('log_actual_user_history_v2 failed: ' . $e->getMessage());
+    }
+}
+
+function user_display_value($value, array $map) {
+    $value = normalize_history_user_value($value);
+    if ($value === null) return 'Unassigned';
+    return (is_numeric($value) && isset($map[(string)(int)$value])) ? $map[(string)(int)$value] : $value;
+}
+
 function ensure_equipment_status_column_supports_missing(PDO $pdo) {
     static $checked = false;
     if ($checked) return;
@@ -141,6 +319,7 @@ function equipment_matches_search(array $row, $search) {
 
 $equipment = new Equipment($pdo);
 ensure_equipment_status_column_supports_missing($pdo);
+ensure_equipment_actual_user_history_table($pdo);
 
 // Helper: generate QR image (uses api.qrserver.com) that points to public QR view page
 function generate_qr_for_equipment($pdo, $equipmentId) {
@@ -322,6 +501,110 @@ try {
             }
             break;
 
+        case 'getActualUserHistory':
+            $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            if (!$id) { echo json_encode(['error' => 'Invalid id']); exit; }
+
+            try {
+                $stmt = $pdo->prepare("
+                    SELECT h.id,
+                           h.equipment_id,
+                           h.previous_actual_user,
+                           h.new_actual_user,
+                           h.date_assigned,
+                           h.date_moved,
+                           h.status,
+                           h.changed_by,
+                           h.changed_at,
+                           u.full_name AS changed_by_name,
+                           e.status AS current_status
+                    FROM equipment_actual_user_history h
+                    LEFT JOIN users u ON u.id = h.changed_by
+                    LEFT JOIN equipment e ON e.id = h.equipment_id
+                    WHERE h.equipment_id = :equipment_id
+                    ORDER BY h.changed_at DESC, h.id DESC
+                ");
+                $stmt->bindValue(':equipment_id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if (!count($rows)) {
+                    $currentStmt = $pdo->prepare("
+                        SELECT actual_user,
+                               status,
+                               created_by,
+                               created_at
+                        FROM equipment
+                        WHERE id = :id
+                        LIMIT 1
+                    ");
+                    $currentStmt->bindValue(':id', $id, PDO::PARAM_INT);
+                    $currentStmt->execute();
+                    $current = $currentStmt->fetch(PDO::FETCH_ASSOC);
+
+                    if ($current && normalize_history_user_value($current['actual_user'] ?? null) !== null) {
+                        $changedBy = isset($current['created_by']) && is_numeric($current['created_by'])
+                            ? (int)$current['created_by']
+                            : null;
+                        $changedByName = null;
+                        if ($changedBy) {
+                            $userStmt = $pdo->prepare('SELECT full_name FROM users WHERE id = :id LIMIT 1');
+                            $userStmt->bindValue(':id', $changedBy, PDO::PARAM_INT);
+                            $userStmt->execute();
+                            $changedByName = $userStmt->fetchColumn() ?: null;
+                        }
+
+                        $rows[] = [
+                            'id' => null,
+                            'equipment_id' => $id,
+                            'previous_actual_user' => null,
+                            'new_actual_user' => $current['actual_user'],
+                            'date_assigned' => $current['created_at'] ?? null,
+                            'date_moved' => null,
+                            'status' => $current['status'] ?? null,
+                            'changed_by' => $changedBy,
+                            'changed_at' => $current['created_at'] ?? null,
+                            'changed_by_name' => $changedByName
+                        ];
+                    }
+                }
+
+                $values = [];
+                foreach ($rows as $row) {
+                    $values[] = $row['previous_actual_user'] ?? null;
+                    $values[] = $row['new_actual_user'] ?? null;
+                }
+                $userMap = resolve_user_display_names($pdo, $values);
+
+                foreach ($rows as &$row) {
+                    if (empty($row['date_assigned']) && empty($row['date_moved']) && !empty($row['changed_at'])) {
+                        if (normalize_history_user_value($row['previous_actual_user'] ?? null) === null) {
+                            $row['date_assigned'] = $row['changed_at'];
+                        } else {
+                            $row['date_moved'] = $row['changed_at'];
+                        }
+                    }
+                    // If the history row has no explicit status, prefer 'Transferred' for closed rows,
+                    // otherwise fall back to the equipment's current status for active rows.
+                    if (empty($row['status'])) {
+                        if (!empty($row['date_moved'])) {
+                            $row['status'] = 'Transferred';
+                        } elseif (!empty($row['current_status'])) {
+                            $row['status'] = $row['current_status'];
+                        }
+                    }
+                    $row['previous_actual_user_display'] = user_display_value($row['previous_actual_user'] ?? null, $userMap);
+                    $row['new_actual_user_display'] = user_display_value($row['new_actual_user'] ?? null, $userMap);
+                    $row['changed_by_display'] = $row['changed_by_name'] ?: 'System';
+                }
+                unset($row);
+
+                echo json_encode(['success' => true, 'data' => $rows]);
+            } catch (Exception $e) {
+                echo json_encode(['success' => false, 'error' => 'Failed to load actual user history']);
+            }
+            break;
+
         case 'create':
             if (!$input) { echo json_encode(['error' => 'Missing payload']); exit; }
 
@@ -390,6 +673,7 @@ try {
 
                 // try generate QR and update path (best-effort)
                 try { generate_qr_for_equipment($pdo, $id); } catch (Exception $e) {}
+                log_actual_user_history_v2($pdo, $id, null, $equipment->actual_user, $equipment->status ?? null);
 
                 echo json_encode(['success' => true, 'id' => $id]);
             } else {
@@ -403,6 +687,19 @@ try {
             if (!$id) { echo json_encode(['error' => 'Invalid id']); exit; }
 
             $equipment->id = $id;
+            $previousActualUser = null;
+            $previousStatus = null;
+            try {
+                $prevStmt = $pdo->prepare('SELECT actual_user, status FROM equipment WHERE id = :id LIMIT 1');
+                $prevStmt->bindValue(':id', $id, PDO::PARAM_INT);
+                $prevStmt->execute();
+                $previousRow = $prevStmt->fetch(PDO::FETCH_ASSOC);
+                $previousActualUser = $previousRow['actual_user'] ?? null;
+                $previousStatus = $previousRow['status'] ?? null;
+            } catch (Exception $e) {
+                $previousActualUser = null;
+                $previousStatus = null;
+            }
 
             // assign fields (convert camelCase -> snake_case)
             foreach ($input as $k => $v) {
@@ -448,6 +745,7 @@ try {
             if ($equipment->update()) {
                 // regenerate QR if property_number changed or no qr exists
                 try { generate_qr_for_equipment($pdo, $id); } catch (Exception $e) {}
+                log_actual_user_history_v2($pdo, $id, $previousActualUser, $equipment->actual_user ?? null, $equipment->status ?? $previousStatus);
 
                 // Return mapped properties so client can verify what was saved
                 $after = [];

@@ -238,11 +238,11 @@ $sidebarRole = (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin')
                   </div>
                   <div class="mt-3">
                       <div class="d-flex align-items-center mb-2">
-                        <div class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: #28a745;"></div>
+                        <div class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: #198754;"></div>
                         <small class="text-muted">Assigned: <span id="equipmentAssignedCount" class="fw-bold text-dark">Ã¢â‚¬â€</span></small>
                       </div>
                       <div class="d-flex align-items-center mb-2">
-                        <div class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: #ffc107;"></div>
+                        <div class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: #0d6efd;"></div>
                         <small class="text-muted">Available: <span id="equipmentAvailableCount" class="fw-bold text-dark">Ã¢â‚¬â€</span></small>
                       </div>
                       <div class="d-flex align-items-center mb-2">
@@ -250,7 +250,7 @@ $sidebarRole = (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin')
                         <small class="text-muted">Returned: <span id="equipmentReturnedCount" class="fw-bold text-dark">Ã¢â‚¬â€</span></small>
                       </div>
                       <div class="d-flex align-items-center mb-2">
-                        <div class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: #17a2b8;"></div>
+                        <div class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: #ffc107;"></div>
                         <small class="text-muted">Under Maintenance: <span id="equipmentUnderMaintenanceCount" class="fw-bold text-dark">Ã¢â‚¬â€</span></small>
                       </div>
                       <div class="d-flex align-items-center mb-2">
@@ -379,6 +379,6 @@ $sidebarRole = (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin')
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <!-- Admin Navigation JavaScript -->
   <script src="../../../../public/assets/js/admin/navigation.js?v=20260402-1"></script>
-  <script src="../../../../public/assets/js/admin/dashboard-live-data.js?v=20260520-missing-purple"></script>
+  <script src="../../../../public/assets/js/admin/dashboard-live-data.js?v=20260606-missing-status"></script>
   </body>
 </html>

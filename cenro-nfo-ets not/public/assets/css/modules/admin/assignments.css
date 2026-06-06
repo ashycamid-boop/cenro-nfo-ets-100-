@@ -1,0 +1,886 @@
+/* ===== ASSIGNMENTS STYLES ===== */
+
+.main-content {
+  background: #ECEFF1;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container-fluid {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 12px;
+}
+
+/* Override Bootstrap table borders */
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th {
+  border-bottom-width: 1px;
+}
+
+/* Top Action Bar */
+.top-action-bar {
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #e7edf3;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.search-box input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+  height: 45px;
+  background: white;
+  width: 100%;
+}
+
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+  height: 45px;
+  background: white;
+  padding: 12px 16px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  height: 45px;
+  font-weight: 500;
+}
+
+.btn-outline-secondary {
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  border: 1px solid #6c757d;
+  color: #6c757d;
+  height: 45px;
+  background: white;
+}
+
+.btn-outline-dark {
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 1px solid #6c757d;
+  color: #6c757d;
+  height: 45px;
+  white-space: nowrap;
+}
+
+.btn-outline-dark:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+/* Table Styles */
+.assignments-table-section {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.table {
+  margin-bottom: 0;
+  border-collapse: collapse;
+  border: 1px solid #dee2e6;
+}
+
+#assignmentsTable {
+  min-width: 1100px;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  font-weight: 600;
+  color: #495057;
+  padding: 12px;
+  font-size: 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table tbody td {
+  padding: 12px;
+  font-size: 14px;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  vertical-align: middle;
+  background-color: white;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:hover td {
+  background-color: #f8f9fa;
+}
+
+/* QR Code Display */
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+}
+
+.qr-pattern {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #000;
+  background: white;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0;
+  padding: 2px;
+}
+
+.qr-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+
+.qr-dot {
+  width: 100%;
+  height: 100%;
+  border: 0.5px solid #ccc;
+}
+
+.qr-dot.black {
+  background-color: #000;
+}
+
+.qr-dot.white {
+  background-color: #fff;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.action-buttons a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #007bff;
+}
+
+.action-buttons a:hover {
+  text-decoration: underline !important;
+}
+
+.action-buttons .btn-outline-dark {
+  padding: 6px 10px;
+  font-size: 12px;
+  height: auto;
+  min-width: auto;
+  border: 1px solid #6c757d;
+  color: #6c757d;
+  border-radius: 4px;
+}
+
+.action-buttons .btn-outline-dark:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Form Controls */
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-action-bar .row > div {
+    margin-bottom: 10px;
+  }
+  
+  .top-action-bar .text-end {
+    text-align: left !important;
+  }
+
+  .main-content {
+    padding: 12px;
+  }
+
+  .container-fluid {
+    padding: 0;
+  }
+
+  .top-action-bar {
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  
+  .table-responsive {
+    border: none;
+  }
+  
+  .table thead th,
+  .table tbody td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .qr-code-display {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .qr-code-display i {
+    font-size: 16px;
+  }
+
+  #assignmentsTable {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 576px) {
+  .top-action-bar {
+    padding: 10px;
+  }
+  
+  .container-fluid {
+    padding: 0 4px;
+  }
+}
+
+/* ===== QR CODE PRINT LAYOUT ===== */
+
+/* Hide QR grid by default */
+.qr-print-layout {
+  display: none !important;
+}
+
+/* QR Grid Container */
+.qr-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  padding: 5mm;
+  font-family: 'Times New Roman', serif;
+}
+
+/* Individual QR Card */
+.qr-card {
+  padding: 8px;
+  background: white;
+  page-break-inside: avoid;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* QR Card Header */
+.qr-card-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 6px;
+}
+
+.qr-logo {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.qr-title {
+  flex: 1;
+  text-align: center;
+}
+
+.qr-title h6 {
+  font-size: 10pt;
+  font-weight: bold;
+  margin: 0 0 1px 0;
+  line-height: 1.0;
+}
+
+.qr-title p {
+  font-size: 8pt;
+  margin: 0;
+  line-height: 0.9;
+}
+
+/* QR Content Area */
+.qr-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+/* RP Government Property Text */
+.rp-property-text {
+  font-size: 11pt;
+  font-weight: bold;
+  text-align: center;
+  margin: 8px 0 5px 0;
+  letter-spacing: 0.5px;
+  font-family: 'Times New Roman', serif;
+}
+
+/* QR Code Placeholder */
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+
+.qr-code-placeholder {
+  width: 120px;
+  height: 120px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+}
+
+.qr-code-image {
+  width: 114px;
+  height: 114px;
+  object-fit: contain;
+}
+
+/* QR Info */
+.qr-info {
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
+.qr-info h6 {
+  font-size: 12pt;
+  font-weight: bold;
+  margin: 0 0 2px 0;
+  letter-spacing: 0.2px;
+}
+
+.qr-info p {
+  font-size: 10pt;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Print Styles for QR Codes */
+@media print {
+  /* Hide everything except QR grid when printing QR codes */
+  body.printing-qr * {
+    display: none !important;
+  }
+  
+  body.printing-qr .qr-print-layout,
+  body.printing-qr .qr-print-layout * {
+    display: block !important;
+  }
+  
+  body.printing-qr .qr-grid-container {
+    display: grid !important;
+  }
+  
+  body.printing-qr .qr-card-header {
+    display: flex !important;
+  }
+  
+  body.printing-qr .qr-content {
+    display: flex !important;
+  }
+  
+  body.printing-qr .qr-code-container {
+    display: flex !important;
+  }
+  
+  /* Print layout adjustments */
+  body.printing-qr {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  body.printing-qr .qr-print-layout {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+  
+  body.printing-qr .qr-grid-container {
+    padding: 3mm !important;
+    gap: 3mm !important;
+  }
+  
+  body.printing-qr .qr-card {
+    border: 1px solid #000 !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    height: 300px !important;
+  }
+  
+  body.printing-qr .qr-code-placeholder {
+    width: 110px !important;
+    height: 110px !important;
+  }
+  
+  body.printing-qr .qr-code-image {
+    width: 104px !important;
+    height: 104px !important;
+  }
+  
+  body.printing-qr .qr-logo {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  body.printing-qr .qr-title h6 {
+    font-size: 9pt !important;
+  }
+  
+  body.printing-qr .qr-title p {
+    font-size: 7pt !important;
+  }
+  
+  body.printing-qr .qr-info h6 {
+    font-size: 11pt !important;
+  }
+  
+  body.printing-qr .qr-info p {
+    font-size: 9pt !important;
+  }
+  
+  body.printing-qr .rp-property-text {
+    font-size: 10pt !important;
+    font-weight: bold !important;
+    letter-spacing: 0.3px !important;
+  }
+}
+/* Extracted from inline styles in assignments.php */
+.qr-code-image {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+    /* compact table: smaller font and reduced row padding */
+    #assignmentsTable, #assignmentsTable th, #assignmentsTable td {
+      font-size: 13px;
+    }
+    #assignmentsTable thead th {
+      font-size: 12px;
+      padding: .35rem .5rem;
+    }
+    #assignmentsTable tbody td {
+      padding: .35rem .5rem;
+      vertical-align: middle;
+    }
+    #assignmentsTable tbody tr {
+      height: 40px; /* visual row height; browsers may vary */
+    }
+
+.admin-assignments-page .actions-cell {
+  white-space: nowrap;
+}
+
+.admin-assignments-page .action-group {
+  align-items: center;
+}
+
+@media (max-width: 991.98px) {
+  .admin-assignments-page .main-content {
+    padding: 0;
+  }
+
+  .admin-assignments-page .container-fluid {
+    padding: 0.75rem !important;
+  }
+
+  .admin-assignments-page .top-action-bar .row {
+    row-gap: 0.75rem;
+  }
+
+  .admin-assignments-page .top-action-bar .col-md-2,
+  .admin-assignments-page .top-action-bar .col-md-3 {
+    width: 100%;
+  }
+
+  .admin-assignments-page #searchInput,
+  .admin-assignments-page #roleFilter,
+  .admin-assignments-page #officeUnitFilter,
+  .admin-assignments-page #applyBtn,
+  .admin-assignments-page #clearBtn,
+  .admin-assignments-page .btn-outline-dark {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-assignments-page .container-fluid {
+    padding: 0.4rem !important;
+  }
+
+  .admin-assignments-page .topbar-title {
+    font-size: 1.05rem;
+  }
+
+  .admin-assignments-page .top-action-bar .d-flex {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.45rem !important;
+  }
+
+  .admin-assignments-page .assignments-table-section {
+    border-radius: 14px;
+  }
+
+  .admin-assignments-page .table-responsive {
+    overflow: visible;
+  }
+
+  .admin-assignments-page .table thead {
+    display: none;
+  }
+
+  .admin-assignments-page .table,
+  .admin-assignments-page .table tbody,
+  .admin-assignments-page .table tr,
+  .admin-assignments-page .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-assignments-page .table tbody {
+    padding: 0.55rem;
+  }
+
+  .admin-assignments-page .table tr {
+    background: #fff;
+    border: 1px solid #e7edf3;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    height: auto !important;
+  }
+
+  .admin-assignments-page .table tbody td {
+    border: 0;
+    border-bottom: 1px solid #eef2f6;
+    padding: 0.72rem 0.9rem;
+    font-size: 0.82rem;
+  }
+
+  .admin-assignments-page .table tbody td:last-child {
+    border-bottom: 0;
+  }
+
+  .admin-assignments-page .table tbody td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.28rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6b7280;
+  }
+
+  .admin-assignments-page .table tbody td[colspan] {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .admin-assignments-page .table tbody td[colspan]::before {
+    content: none;
+  }
+
+  .admin-assignments-page .table tbody td[data-label="Full Name"] img {
+    width: 34px !important;
+    height: 34px !important;
+    margin-right: 0.6rem !important;
+  }
+
+  .admin-assignments-page .qr-code-image {
+    width: 58px;
+    height: 58px;
+  }
+
+  .admin-assignments-page .actions-cell,
+  .admin-assignments-page .action-group {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+  }
+
+  .admin-assignments-page .actions-cell::before {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-assignments-page .assignments-desktop-controls {
+    display: none !important;
+  }
+
+  .admin-assignments-page .assignments-mobile-toolbar {
+    display: block !important;
+  }
+
+  .admin-assignments-page .assignments-mobile-toolbar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .admin-assignments-page .assignments-mobile-search .form-control {
+    min-height: 52px;
+    border-radius: 18px;
+    border: 1px solid #d6dfeb;
+    padding: 0.95rem 1rem;
+    font-size: 1rem;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    border-radius: 18px;
+    border: 1px solid #d6dfeb;
+    background: #fff;
+    color: #1f2937;
+    font-weight: 600;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .admin-assignments-page .assignments-mobile-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0.9rem;
+  }
+
+  .admin-assignments-page .assignments-mobile-actions .btn {
+    min-height: 48px;
+    border-radius: 16px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+
+  .admin-assignments-page .assignments-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #174ea6;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .admin-assignments-page .assignments-table-section {
+    border-radius: 14px;
+  }
+
+  .admin-assignments-page .table-responsive {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .admin-assignments-page #assignmentsTable {
+    min-width: 1100px !important;
+    table-layout: auto;
+  }
+
+  .admin-assignments-page .table thead {
+    display: table-header-group !important;
+  }
+
+  .admin-assignments-page .table,
+  .admin-assignments-page .table tbody,
+  .admin-assignments-page .table td,
+  .admin-assignments-page .table th {
+    display: revert !important;
+    width: auto !important;
+  }
+
+  .admin-assignments-page .table tbody {
+    padding: 0 !important;
+  }
+
+  .admin-assignments-page .table tr {
+    display: table-row !important;
+    width: auto !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .admin-assignments-page .table tbody tr[style*="display: none"] {
+    display: none !important;
+  }
+
+  .admin-assignments-page .table tbody tr:not([style*="display: none"]) {
+    display: table-row !important;
+  }
+
+  .admin-assignments-page .table tbody td::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  .admin-assignments-page .table thead th,
+  .admin-assignments-page .table tbody td {
+    padding: 0.7rem 0.75rem !important;
+    font-size: 0.78rem !important;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .admin-assignments-page .table tbody td[data-label="Full Name"] img {
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 0.45rem !important;
+  }
+
+  .admin-assignments-page .qr-code-image {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .admin-assignments-page .actions-cell,
+  .admin-assignments-page .action-group {
+    display: block !important;
+    white-space: nowrap;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1600;
+    display: none;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-modal.is-open {
+    display: block;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.48);
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    padding: 0.75rem 1rem 1rem;
+    box-shadow: 0 -16px 40px rgba(15, 23, 42, 0.18);
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-handle {
+    width: 48px;
+    height: 5px;
+    border-radius: 999px;
+    background: #cbd5e1;
+    margin: 0 auto 0.9rem;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-body .form-control,
+  .admin-assignments-page .assignments-mobile-filter-body .form-select {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .admin-assignments-page .assignments-mobile-filter-footer .btn {
+    min-height: 46px;
+    border-radius: 14px;
+  }
+}
+
